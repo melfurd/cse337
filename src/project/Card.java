@@ -2,9 +2,10 @@ package project;
 /**
  * Creates all the standard cards to be used in standard decks
  * including 4 suites and 13 ranks for a total of 52 standard cards.
- * @author Stuart Nolton
- * @version 1.0
- * @since   2015-03-31 
+/**
+ * @author Stuart Nolton and Mel Chi
+ * @version 2.0 2015-04-13
+ * @since   version 1.0 2015-03-31 
  */
 public class Card {
 
@@ -14,7 +15,7 @@ public class Card {
 	private boolean faceUp; //boolean for face up face down true = face up, false = face down
 	private boolean onTable; //boolean for on the table and off the table true = on the table, false = off the table
 	private String owner; //String value to assign ownership to a card.
-	public String compareToRank;
+	public String compareToRank; // Need a compare to as 10 was screwing up a bit
 	private int numRealRank;
 	
 	

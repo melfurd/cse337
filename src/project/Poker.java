@@ -30,6 +30,7 @@ public class Poker implements CardGame{
 	@Override
 	public void ActionListener(ActionEvent e) {
 		if(e.getSource()== deal && dealCards){
+			clearMessage();
 			stringBuilder = new StringBuilder();
 			d = new Deck();
 			d.standardFill();

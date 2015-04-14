@@ -5,9 +5,9 @@ import java.util.Collections;
 
 
 /**
- * @author Stuart Nolton
- * @version 1.0
- * @since   2015-03-31 
+ * @author Stuart Nolton and Mel Chi
+ * @version 2.0 2015-04-13
+ * @since   version 1.0 2015-03-31 
  */
 public class Deck extends ArrayList<Card> {
 	
