@@ -4,6 +4,11 @@ import java.util.Arrays;
 import java.util.Collections;
 
 
+/**
+ * @author Stuart Nolton
+ * @version 1.0
+ * @since   2015-03-31 
+ */
 public class Deck extends ArrayList<Card> {
 	
 	private int nCards;
@@ -14,6 +19,11 @@ public class Deck extends ArrayList<Card> {
 		
 	}
 	
+	/**
+	 * Fills deck with a shuffled standard deck of cards
+	 * including 52 cards with 13 in each suit
+	 * ranking from 1 to 13.
+	 */
 	public void standardFill(){
 		nCards=52;
 		nRanks=13;
@@ -26,6 +36,13 @@ public class Deck extends ArrayList<Card> {
 		Collections.shuffle(this);
 	}
 	
+	/**
+	 * Deals a hand of n number of cards. Try block makes sure there
+	 * are enough cards in the deck to complete hand. If
+	 * there are not enough cards a message is printed.
+	 * @param nCards
+	 * @return one hand of n cards
+	 */
 	public Deck dealHand(int nCards){
 		Deck hand = new Deck();
 		try{
@@ -39,6 +56,14 @@ public class Deck extends ArrayList<Card> {
 		return hand;
 	}
 	
+	/**
+	 * Deals two hands of n number of cards using two decks.
+	 * Try block makes sure there are enough cards
+	 * in both decks to deal hand. If there are not 
+	 * enough cards a message is printed.
+	 * @param nCards
+	 * @return two hands of n cards
+	 */
 	public ArrayList<Deck> deal2Hands(int nCards){
 		Deck d1 = new Deck();
 		Deck d2 = new Deck();
@@ -57,6 +82,10 @@ public class Deck extends ArrayList<Card> {
 		return twoHands;
 	}
 	
+	/**
+	 * Splits deck into two equal parts and moves bottom half to top
+	 * @return a cut deck
+	 */
 	public ArrayList<Deck> divideDeck(){
 		Deck d1 = new Deck();
 		Deck d2 = new Deck();
@@ -74,6 +103,11 @@ public class Deck extends ArrayList<Card> {
 		return splitDeck;
 	}
 	
+	/**
+	 * Draws a card from this deck, remove this card from the deck.
+	 * @param index
+	 * @return drawn card
+	 */
 	public Card drawCard(int index){
 		Card drawnCard = this.remove(index);
 		this.trimToSize();
@@ -81,18 +115,31 @@ public class Deck extends ArrayList<Card> {
 		
 	}
 	
+	/**
+	 * get size of deck
+	 * @return number of cards in deck
+	 */
 	public int getSize(){
 		return nCards;
 	}
 	
+	/**
+	 * Adds a card to the deck
+	 * @param e
+	 */
 	public void addCard(Card e){
 		this.add(e);
 	}
 	
 	
-	
 	//public Card
 	
+	/**
+	 * Instantiates a deck of cards with a standard deck.
+	 * Displays the deck of cards, removes a card and then 
+	 * adds the card back to the top of the deck
+	 * @param args
+	 */
 	public static void main(String args[]){
 		Deck d = new Deck();
 		d.standardFill();

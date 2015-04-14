@@ -97,13 +97,7 @@ public class Poker implements CardGame{
 
 	}
 	
-	@Override
-	public ArrayList<Deck> getDecks() {
-		ArrayList<Deck> theDeck = new ArrayList<Deck>();
-		theDeck.add(d);
-		return theDeck;
-	}
-	
+
 	@Override
 	public ArrayList<Card> getCardsOnTable() {
 		return theDeck;
@@ -120,18 +114,63 @@ public class Poker implements CardGame{
 		return actions;
 	}
 	
+	/* (non-Javadoc)
+	 * @see CardGame#sendMessage(java.lang.String)
+	 */
 	@Override
 	public void sendMessage(String message) {
-		this.message = message;
+		this.message+=message;
 	}
 	
+	/* (non-Javadoc)
+	 * @see CardGame#clearMessage()
+	 */
+	public void clearMessage(){
+		this.message="";
+	}
+	
+	/* (non-Javadoc)
+	 * @see CardGame#getMessage()
+	 */
 	public String getMessage(){
 		return this.message;
 	}
 
 	@Override
-	public int getPlayer() {
+	public void checkForWin() {
+		
+	}
+	
+	/**
+	 * Updates card count of each players deck
+	 */
+	public void updateCardCount(){
+	}
+	
+	/* (non-Javadoc)
+	 * @see CardGame#usesHand()
+	 */
+	@Override
+	public boolean usesHand() {
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * returns/sets the number or players for the game
+	 * for which the rules of the war determine to be two
+	 * @see CardGame#players()
+	 */
+	@Override
+	public int players() {
 		return 2;
+	}
+
+	/* (non-Javadoc)
+	 * @see CardGame#getHand(int)
+	 */
+	@Override
+	public ArrayList<Card> getHand(int x) {
+		return null;
 	}
 	
 

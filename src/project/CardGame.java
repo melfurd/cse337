@@ -6,25 +6,43 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 
 
+/**
+ * @author Stuart Nolton
+ * @version 1.0
+ * @since   2015-03-31 
+ */
 public interface CardGame{
 	
-	ArrayList<Deck> Decks = new ArrayList<Deck>();
-	
+	//an arrayList that contains all the cards currently on the table
 	ArrayList<Card> cardsOnTable = new ArrayList<Card>();
 	
+	//gets the logic associated with the action buttons for a given game
 	void ActionListener(ActionEvent e);
 	
-	ArrayList<Deck> getDecks();
-	
+	//gets an arrayList that contains all the cards currently on the table (should return cardsOnTable)
 	ArrayList<Card> getCardsOnTable();
 	
+	//gets an ArrayList that contains all the buttons associated with a given game
 	ArrayList<JButton> getActions();
 	
-	int getPlayer();
-	
+	//used to set a message for when TableTop calls getMessage()
 	void sendMessage(String message);
 	
+	//gets the current message stored in the game
 	String getMessage();
 	
+	//checks for the win conditions of the given game
+	void checkForWin();
 	
+	//boolean for weather or not this game uses hands
+	boolean usesHand();
+	
+	//if a game uses hands this method should return the hand for player number x
+	ArrayList<Card> getHand(int x);
+	
+	//clears the message variable subsequent calls to getMessage should return ""
+	void clearMessage();
+	
+	//returns the number of players for the given game
+	int players();
 }
