@@ -5,6 +5,8 @@ public class Card {
 	private String rank;
 	private int numRank;
 	private String suit;
+	public String compareToRank;
+	private int numRealRank;
 	private boolean faceUp;
 	private boolean onTable;
 	private String owner;
@@ -50,6 +52,61 @@ public class Card {
 			this.rank = "Ace";
 			break;
 		}
+		
+		switch(rank){
+		case 0:
+			this.numRealRank = 2;
+			this.compareToRank = "A";
+			break;
+		case 1:
+			this.numRealRank = 3;
+			this.compareToRank = "B";
+			break;
+		case 2:
+			this.numRealRank = 4;
+			this.compareToRank = "C";
+			break;
+		case 3:
+			this.numRealRank = 5;
+			this.compareToRank = "D";
+			break;
+		case 4:
+			this.numRealRank = 6;
+			this.compareToRank = "E";
+			break;
+		case 5:
+			this.numRealRank = 7;
+			this.compareToRank = "F";
+			break;
+		case 6:
+			this.numRealRank = 8;
+			this.compareToRank = "G";
+			break;
+		case 7:
+			this.numRealRank = 9;
+			this.compareToRank = "H";
+			break;
+		case 8:
+			this.numRealRank = 10;
+			this.compareToRank = "I";
+			break;
+		case 9:
+			this.numRealRank = 11;
+			this.compareToRank = "J";
+			break;
+		case 10:
+			this.numRealRank = 12;
+			this.compareToRank = "K";
+			break;
+		case 11:
+			this.numRealRank = 13;
+			this.compareToRank = "L";
+			break;
+		case 12:
+			this.numRealRank = 14;
+			this.compareToRank = "M";
+			break;
+		}
 	}
 	
 	public void setFaceUp(boolean value){
@@ -88,6 +145,10 @@ public class Card {
 		return numRank;
 	}
 	
+	public int getRealNumRank(){
+		return numRealRank;
+	}
+	
 	public String getCard(){
 		if(faceUp){
 			return rank+" of "+suit;
@@ -95,5 +156,9 @@ public class Card {
 		else{
 			return "(Face Down Card)";
 		}
+	}
+	
+	public String getCompareToRank(){
+		return compareToRank;
 	}
 }

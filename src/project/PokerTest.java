@@ -64,13 +64,13 @@ public class PokerTest{
 		
 		Collections.sort(player1Cards, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		
 		Collections.sort(player2Cards, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		
@@ -87,19 +87,26 @@ public class PokerTest{
 		
 	}
 	
+	public void player1CardResult(){
+		
+	}
+	
+	public void player2CardResult(){
+		
+	}
 	
 	
 	
 	public void whoWins(){
-		Collections.sort(this.player1Cards, new Comparator<Card>(){
+		Collections.sort(player1Cards, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		
-		Collections.sort(this.player2Cards, new Comparator<Card>(){
+		Collections.sort(player2Cards, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		
@@ -117,8 +124,8 @@ public class PokerTest{
 	
 	public boolean compareDecks(Deck first, Deck second){
 		
-		int firstPlayerRank = first.get(4).getNumRank()+2;
-		int secondPlayerRank = second.get(4).getNumRank()+2;
+		int firstPlayerRank = first.get(4).getRealNumRank();
+		int secondPlayerRank = second.get(4).getRealNumRank();
 		boolean firstPlayer = false;
 		boolean secondPlayer = false;
 		int firstPlayerValue = 0;
@@ -366,9 +373,8 @@ public class PokerTest{
 		int king = 0;
 		int ace = 0;
 
-		for (int i = 1; i < theDeck.size() ; i++){
-			int tempRank = theDeck.get(i).getNumRank();
-			tempRank = tempRank + 2;
+		for (int i = 0; i < theDeck.size() ; i++){
+			int tempRank = theDeck.get(i).getRealNumRank();
 			
 			if (tempRank == 2){
 				two++;
@@ -491,8 +497,8 @@ public class PokerTest{
 		int king = 0;
 		int ace = 0;
 
-		for (int i = 1; i < theDeck.size() ; i++){
-			int tempRank = theDeck.get(i).getNumRank()+2;
+		for (int i = 0; i < theDeck.size() ; i++){
+			int tempRank = theDeck.get(i).getRealNumRank();
 			
 			if (tempRank == 2){
 				two++;
