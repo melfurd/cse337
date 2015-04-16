@@ -16,7 +16,6 @@ public class Card {
 	private boolean onTable; //boolean for on the table and off the table true = on the table, false = off the table
 	private String owner; //String value to assign ownership to a card.
 	public String compareToRank; // Need a compare to as 10 was screwing up a bit
-	private int numRealRank;
 	
 	
 	
@@ -69,55 +68,42 @@ public class Card {
 		
 		switch(rank){
 		case 0:
-			this.numRealRank = 2;
 			this.compareToRank = "A";
 			break;
 		case 1:
-			this.numRealRank = 3;
 			this.compareToRank = "B";
 			break;
 		case 2:
-			this.numRealRank = 4;
 			this.compareToRank = "C";
 			break;
 		case 3:
-			this.numRealRank = 5;
 			this.compareToRank = "D";
 			break;
 		case 4:
-			this.numRealRank = 6;
 			this.compareToRank = "E";
 			break;
 		case 5:
-			this.numRealRank = 7;
 			this.compareToRank = "F";
 			break;
 		case 6:
-			this.numRealRank = 8;
 			this.compareToRank = "G";
 			break;
 		case 7:
-			this.numRealRank = 9;
 			this.compareToRank = "H";
 			break;
 		case 8:
-			this.numRealRank = 10;
 			this.compareToRank = "I";
 			break;
 		case 9:
-			this.numRealRank = 11;
 			this.compareToRank = "J";
 			break;
 		case 10:
-			this.numRealRank = 12;
 			this.compareToRank = "K";
 			break;
 		case 11:
-			this.numRealRank = 13;
 			this.compareToRank = "L";
 			break;
 		case 12:
-			this.numRealRank = 14;
 			this.compareToRank = "M";
 			break;
 		}
@@ -189,11 +175,19 @@ public class Card {
 	}
 	
 	/**
-	 * returns a numerical representation of this card's rank
+	 * returns a numerical representation of this card's rank, starting from 0 to 12
 	 * @return an integer representation of this card's rank
 	 */
 	public int getNumRank(){
 		return numRank;
+	}
+	
+	/**
+	 * returns a numerical representation of this card's rank, starting from 2 to 14, the actual values of poker
+	 * @return an integer representation of this card's rank
+	 */
+	public int getNumericalRank(){
+		return numRank+2;
 	}
 	
 	/**
@@ -209,7 +203,7 @@ public class Card {
 		}
 	}
 	public int getRealNumRank(){
-		return numRealRank;
+		return numRank+2;
 	}
 	
 	

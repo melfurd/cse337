@@ -38,7 +38,7 @@ public interface CardGame{
 	boolean usesHand();
 	
 	//if a game uses hands this method should return the hand for player number x
-	ArrayList<Card> getHand(int x);
+	String getHand(int x);
 	
 	//clears the message variable subsequent calls to getMessage should return ""
 	void clearMessage();

@@ -1,5 +1,4 @@
 package project;
-
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
@@ -224,7 +223,7 @@ public class War implements CardGame{
 	 * @see CardGame#getHand(int)
 	 */
 	@Override
-	public ArrayList<Card> getHand(int x) {
+	public String getHand(int x) {
 		return null;
 	}
 

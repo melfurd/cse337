@@ -5,10 +5,24 @@ import java.util.Comparator;
 
 public class PokerUtility {
 
-	private int firstPlayerRank = 0;
-	private int secondPlayerRank = 0;
+	
+	private int player1MainRank = 0;
+	private int player1SecondRank = 0;
+	private int player1ThirdRank = 0;
+	
+	private int player2MainRank = 0;
+	private int player2SecondRank = 0;
+	private int player2ThirdRank = 0;
+	
+	public int highRank1 = 0;
+	public int highRank2 = 0;
+	public int highRank3 = 0;
+	
+	private boolean firstPlayer = false;
+	private boolean secondPlayer = false;
 	
 	public boolean tieDeck = false;
+	public String cardMessage = "";
 	Deck first;
 	Deck second;
 	
@@ -16,213 +30,556 @@ public class PokerUtility {
 		
 	}
 	
-	public PokerUtility(Deck first, Deck Second){
+	public PokerUtility(Deck first, Deck second){
 		this.first = first;
 		this.second = second;
 	}
 	
-	public boolean compareDecks(Deck first, Deck second){
-		
-		boolean firstPlayer = false;
-		boolean secondPlayer = false;
-		int firstPlayerValue = 0;
-		int secondPlayerValue = 0;
-	
-		//Check straight flush
-		
-		firstPlayer = checkStraightFlush(first);
-		secondPlayer = checkStraightFlush(second);
-		
-		if (firstPlayer && secondPlayer){
-			if (firstPlayerRank > secondPlayerRank){
-				return true;
-			}
-			else if (firstPlayerRank == secondPlayerRank){
-				tieDeck = true;
-				return true;
-			}
-			else{
-				return false;
-			}
-				
-		}
-		else if (firstPlayer){
-			return true;
-		}
-		else if (secondPlayer){
-			return false;
-		}
-		
-		//Check four of a kind
-		
-		firstPlayerValue = checkNumOfAKind(first, 4);
-		secondPlayerValue = checkNumOfAKind(second, 4);
-		
-		if (firstPlayerValue == 0 && secondPlayerValue == 0){
-			
-		}
-		else if (firstPlayerValue > secondPlayerValue){
-			stringBuilder.append("Player 1 has four of a kind " + firstPlayerValue + "\n");
-			return true;
-		}
-		else if (secondPlayerValue > firstPlayerValue){
-			stringBuilder.append("Player 2 has four of a kind " + secondPlayerValue + "\n");
-			return false;
-		}
-		
-		//Check full house
-		firstPlayerValue = checkFullHouse(first);
-		secondPlayerValue = checkFullHouse(second);
-		if (firstPlayerValue == 0 && secondPlayerValue == 0){
-			
-		}
-		else if (firstPlayerValue > secondPlayerValue){
-			stringBuilder.append("Player 1 has full house with 3 of a kind being" + firstPlayerValue + "\n");
-			return true;
-		}
-		else if (secondPlayerValue > firstPlayerValue){
-			stringBuilder.append("Player 2 has full house with 3 of a kind being " + secondPlayerValue + "\n");
-			return false;
-		}
-		
-		
-		//Check flush
-		firstPlayer = checkFlush(first);
-		secondPlayer = checkFlush(second);
-		
-		if (firstPlayer && secondPlayer){
-			if (firstPlayerRank > secondPlayerRank){
-				stringBuilder.append("Player 1 wins with a higher flush\n");
-				return true;
-			}
-			else{
-				return false;
-			}
-				
-		}
-		else if (firstPlayer){
-			stringBuilder.append("Player 1 wins with a flush\n");
-			return true;
-		}
-		else if (secondPlayer){
-			stringBuilder.append("Player 2 wins with a flush\n");
-			return false;
-		}
-		
-		//Check three of a kind
-		
-		firstPlayerValue = checkNumOfAKind(first, 3);
-		secondPlayerValue = checkNumOfAKind(second, 3);
-		
-		if (firstPlayerValue == 0 && secondPlayerValue == 0){
-			
-		}
-		else if (firstPlayerValue > secondPlayerValue){
-			stringBuilder.append("Player 1 has 3 of a kind being" + firstPlayerValue + "\n");
-			return true;
-		}
-		else if (secondPlayerValue > firstPlayerValue){
-			stringBuilder.append("Player 2 has 3 of a kind being " + secondPlayerValue + "\n");
-			return false;
-		}
-		
-		
-		//Check two pairs of a kind
-		
-		firstPlayerValue = checkTwoPair(first);
-		secondPlayerValue = checkTwoPair(second);
-		
-		if (firstPlayerValue == 0 && secondPlayerValue == 0){
-			
-		}
-		else if (firstPlayerValue > secondPlayerValue){
-			stringBuilder.append("Player 1 has 2 pairs with high pair of " + firstPlayerValue + "\n");
-			return true;
-		}
-		else if (secondPlayerValue > firstPlayerValue){
-			stringBuilder.append("Player 2 has 2 pairs with high pair of " + secondPlayerValue + "\n");
-			return false;
-		}
-		
-		//Check 2 of a kind
-		
-		firstPlayerValue = checkNumOfAKind(first, 2);
-		secondPlayerValue = checkNumOfAKind(second, 2);
-		
-		if (firstPlayerValue == 0 && secondPlayerValue == 0){
-			
-		}
-		else if (firstPlayerValue > secondPlayerValue){
-			stringBuilder.append("Player 1 has 2 of a kind being" + firstPlayerValue + "\n");
-			return true;
-		}
-		else if (secondPlayerValue > firstPlayerValue){
-			stringBuilder.append("Player 2 has 2 of a kind being " + secondPlayerValue + "\n");
-			return false;
-		}
-		
-		
-		//High Card
-		if (firstPlayerRank > secondPlayerRank){
-			stringBuilder.append("Player 1 has high card " + firstPlayerRank + "\n");
-			return true;
-		}
-		else if (firstPlayerRank == secondPlayerRank){
-			stringBuilder.append("Player 1 and 2 has high card tie" + firstPlayerRank + "\n");
-			return true;
-		}
-		else{
-			stringBuilder.append("Player 2 has high card " + secondPlayerRank + "\n");
-			return false;
-		}
-			
-		
-
+	private void resetUtility(){
+		this.player1MainRank = 0;
+		this.player1SecondRank = 0;
+		this.player1ThirdRank = 0;
+		this.player2MainRank = 0;
+		this.player2SecondRank = 0;
+		this.player2ThirdRank = 0;
+		this.firstPlayer = false;
+		this.secondPlayer = false;
+		this.tieDeck = false;
+		resetCardRank();
 	}
 	
+	public void resetUtility(Deck first, Deck second){
+		resetUtility();
+		this.first = first;
+		this.second = second;
+	}
+	
+	public void resetCardRank(){
+		this.highRank1 = 0;
+		this.highRank2 = 0;
+		this.highRank3 = 0;
+	}
+		
 	public Deck sortDeck(Deck theDeck){
 		Collections.sort(theDeck, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		return theDeck;
 	}
 	
-
-	public boolean checkStraight(Deck theDeck){
-		Collections.sort(theDeck, new Comparator<Card>(){
-			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+	/**
+	 * 
+	 * @param first
+	 * @param second
+	 * @return true if first deck wins
+	 */
+	public boolean compareDecks(Deck first, Deck second){
+		resetUtility();
+		
+		first = sortDeck(first);
+		second = sortDeck(second);
+		
+		//STRAIGHT FLUSH
+		System.out.println("StraightFlush");
+		this.firstPlayer = checkStraightFlush(first);
+		this.player1MainRank = this.highRank1;
+		
+		this.secondPlayer = checkStraightFlush(second);
+		this.player2MainRank = this.highRank1;
+		
+		// IF BOTH HAVE A STRAIGHT FLUSH NEED TO COMPARE RANK
+		if (firstPlayer && secondPlayer){
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				return true;
 			}
-		});
-		int straightCounter = 0;
-		for (int i = 1; i < theDeck.size() ; i++){
-			if (theDeck.get(i-1).getRank()+1 == theDeck.get(i).getRank()){
-				straightCounter++;
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				return false;
 			}
 			else{
-				straightCounter = 0;
+				this.tieDeck = true;
+				return true;
 			}
-
 		}
-		if (straightCounter >= 4){
+		else if (firstPlayer){ //ONLY FIRST PLAYER HAS
+			this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+			return true;
+		}
+		else if (secondPlayer){ //ONLY SECOND PLAYER HAS
+			this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
+			return false;
+		}
+		
+		
+		// Check 4 of a kind
+		System.out.println("4");
+		this.player1MainRank = checkNumOfAKind(first, 4, 0);
+		this.player2MainRank = checkNumOfAKind(second, 4, 0);
+		
+		if (player1MainRank == 0 && player2MainRank == 0){
+			
+		}
+		else{
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a 4 of kind with " + player1MainRank;
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a 4 of a kind with " + player2MainRank;
+				return false;
+			}
+			else{
+				this.player1ThirdRank = getHighCardNoMatter(player1MainRank, 1, first);
+				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
+				if (player1ThirdRank > player2ThirdRank){
+					this.cardMessage = "Player wins with a 4 of a kind with " 
+								+ player1MainRank + "with kicker value of " + player1ThirdRank;
+					return true;
+				}
+				else if (player1ThirdRank < player2ThirdRank){
+					this.cardMessage = "Player wins with a 4 of a kind with  " + player2ThirdRank;
+					return false;
+				}
+				else{
+					this.cardMessage = "Players tie with 4 of a kind" + player2MainRank;
+					tieDeck = true;
+					return true;
+				}
+			}
+		}
+		
+		//Full House
+		System.out.println("full");
+		this.player1MainRank = checkFullHouse(first);
+		this.player1SecondRank = this.highRank2; 
+		this.player2MainRank = checkFullHouse(second);
+		this.player2SecondRank = this.highRank2; 
+		
+		if (player1MainRank == 0 && player2MainRank == 0){
+			
+		}
+		else{
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a full house with 3 " + player1MainRank + " and 2" + player1SecondRank;
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a full house with 3 " + player2MainRank + " and 2" + player2SecondRank;
+				return false;
+			}
+			else{
+				if (player1SecondRank > player2SecondRank){
+					this.cardMessage = "Player wins with a full house with 3 " 
+								+ player1MainRank + " and 2" + player1SecondRank;
+					return true;
+				}
+				else if (player1SecondRank < player2SecondRank){
+					this.cardMessage = "Player wins with a full house with  " + player2MainRank
+					+ player2MainRank + " and 2" + player2SecondRank;
+					return false;
+				}
+				else{
+					this.cardMessage = "Players tie with full house of " + player2MainRank
+							+ " and " + player2SecondRank;
+					tieDeck = true;
+					return true;
+				}
+			}
+		}
+		
+		//CHECK FLUSH
+		String temp1 = "";
+		String temp2 = "";
+		temp1 = checkFlush(first);
+		temp2 = checkFlush(second);
+		
+		if (temp1.equals("None") && temp2.equals("None")){
+			
+		}
+		else{
+			temp1 = checkFlush(first);
+			player1MainRank = highRank2;
+			temp2 = checkFlush(second);
+			player2MainRank = highRank2;
+			
+			if (!temp1.equals("None") && temp2.equals("None")){
+				this.cardMessage = "Player wins with a flush of " + temp1;
+				return true;
+			}
+			else if (temp1.equals("None") && !temp2.equals("None")){
+				this.cardMessage = "Player wins with a flush of " + temp2;
+				return false;
+				
+			}
+			else{
+				if (player1MainRank > player2MainRank){
+					this.cardMessage = "Player wins with a flush of " + temp1;
+					return true;
+				}
+				else if (player1MainRank < player2MainRank){
+					this.cardMessage = "Player wins with a flush of " + temp2;
+					return false;
+				}
+				else{
+					this.cardMessage = "Players tie with flush of " + temp1;
+					tieDeck = true;
+					return true;
+				}
+			}
+		}
+		
+		
+		//check 3 of a kind
+		
+		this.player1MainRank = checkNumOfAKind(first, 3, 0);
+		this.player2MainRank = checkNumOfAKind(second, 3, 0);
+		
+		if (player1MainRank == 0 && player2MainRank == 0){
+			
+		}
+		else{
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a 3 of kind with " + player1MainRank;
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a 3 of a kind with " + player2MainRank;
+				return false;
+			}
+			else{
+				this.player1ThirdRank = getHighCardNoMatter(player1MainRank, 1, first);
+				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
+				if (player1ThirdRank > player2ThirdRank){
+					this.cardMessage = "Player wins with a 3 of a kind with " 
+								+ player1MainRank + "with kicker value of " + "";
+					return true;
+				}
+				else if (player1ThirdRank < player2ThirdRank){
+					this.cardMessage = "Player wins with a 3 of a kind with  " + player2MainRank;
+					return false;
+				}
+				else{
+					this.cardMessage = "Players tie 3 of a kind" + player2MainRank;
+					tieDeck = true;
+					return true;
+				}
+			}
+		}
+		
+		//Check 2 pair
+		
+		this.player1MainRank = checkTwoPair(first);
+		this.player1SecondRank = this.highRank2;
+		this.player1ThirdRank = this.highRank3;
+		this.player2MainRank = checkTwoPair(second);
+		this.player2SecondRank = this.highRank2;
+		this.player2ThirdRank = this.highRank3;
+		
+		if (player1MainRank == 0 && player2MainRank == 0){
+			
+		}
+		else{
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a 2 pairs of kind with " + player1MainRank;
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a 2 pairs of a kind with " + player2MainRank;
+				return false;
+			}
+			else{
+				if (player1SecondRank > player2SecondRank){
+					this.cardMessage = "Player wins with a 2 pairs of kind with " + player1MainRank + " and higher 2nd pair.";
+					return true;
+				}
+				else if (player1SecondRank < player2SecondRank){
+					this.cardMessage = "Player wins with a 2 pairs of a kind with " + player2MainRank + " and higher 2nd pair.";
+					return false;
+				}
+				else{
+					if (player1ThirdRank > player2ThirdRank){
+						this.cardMessage = "Player wins with a 2 pairs of kind with " + player1MainRank + " and higher kicker";
+						return true;
+					}
+					else if (player1ThirdRank < player2ThirdRank){
+						this.cardMessage = "Player wins with a 2 pairs of a kind with " + player2MainRank  + " and higher kicker";
+						return false;
+					}
+					else{
+						this.cardMessage = "Players with 2 players having 2 pairs plus same kicker. " + player2MainRank;
+						tieDeck = true;
+						return true;
+					}
+				}
+			}
+		}
+		
+		
+		//check 2 of a kind
+		
+		this.player1MainRank = checkNumOfAKind(first, 2, 0);
+		this.player2MainRank = checkNumOfAKind(second, 2, 0);
+		
+		if (player1MainRank == 0 && player2MainRank == 0){
+			
+		}
+		else{
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a 2 of kind with " + player1MainRank;
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a 2 of a kind with " + player2MainRank;
+				return false;
+			}
+			else{
+				this.player1ThirdRank = getHighCardNoMatter(player1MainRank, 1, first);
+				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
+				if (player1ThirdRank > player2ThirdRank){
+					this.cardMessage = "Player wins with a 2 of a kind with " 
+								+ player1MainRank + "with kicker value of " + "";
+					return true;
+				}
+				else if (player1ThirdRank < player2ThirdRank){
+					this.cardMessage = "Player wins with a 2 of a kind with  " + player2MainRank;
+					return false;
+				}
+				else{
+					this.cardMessage = "Players tie 2 of a kind" + player2MainRank;
+					tieDeck = true;
+					return true;
+				}
+			}
+		}
+		
+		
+		//check high card
+		int deckFirstSize = first.size()-1;
+		int deckSecondSize = first.size()-1;
+
+		
+		if (first.get(deckFirstSize).getRealNumRank() > second.get(deckSecondSize).getRealNumRank()){
+			this.cardMessage = "Player wins with a high card of " + first.get(deckFirstSize).getRealNumRank();
+			return true;
+		}
+		else if (first.get(deckFirstSize).getRealNumRank() < second.get(deckSecondSize).getRealNumRank()){
+			this.cardMessage = "Player wins with a high card of " + second.get(deckSecondSize).getRealNumRank();
+			return false;
+		}
+		else{
+			int exitCounter = 0;
+			player1MainRank = 0;
+			player2MainRank = 0;
+			
+			
+			for (int i = 0; i < first.size() ; i++){
+				if ( first.get(i).getRealNumRank() > (second.get(i).getRealNumRank()) ){
+					this.cardMessage = "Player wins with a highest non same card of " + first.get(i).getRealNumRank();
+					return true;
+				}
+				else if (first.get(i).getRealNumRank() < (second.get(i).getRealNumRank())) {
+					this.cardMessage = "Player wins with a highest non same card of " + second.get(i).getRealNumRank();
+					return false;
+				}
+				
+				exitCounter++;
+				if (exitCounter >= 5){
+					break;
+				}
+			}
+		}
+			
+		tieDeck = true;
+		this.cardMessage = ("Cards are tied");
+		return true;	
+
+	}
+		
+	public boolean checkStraightFlush(Deck theDeck){
+		//resetUtility();
+		String flush = ""; 
+		flush =  checkFlush(theDeck);
+		
+		if (flush.equals("None")){
+			return false;
+		}
+		
+		Deck checker = new Deck();
+		
+		
+		for(int i = 0; i < theDeck.size(); i++){
+			if (theDeck.get(i).getSuit().equals(flush)){
+				checker.add(theDeck.get(i));
+			}
+		}
+		
+		boolean checkIfStraight = checkStraight(checker);
+		
+		if (checkIfStraight){
 			return true;
 		}
 		
 		return false;
 	}
 	
+	public int checkNumOfAKind(Deck theDeck, int num, int ignoreValue){
+		//resetUtility();
+		int two = 0;
+		int three = 0;
+		int four = 0;
+		int five = 0;
+		int six = 0;
+		int seven = 0;
+		int eight = 0;
+		int nine = 0;
+		int ten = 0;
+		int jack = 0;
+		int queen = 0;
+		int king = 0;
+		int ace = 0;
+
+		for (int i = 0; i < theDeck.size() ; i++){
+			int tempRank = theDeck.get(i).getRealNumRank();
+			
+			if (tempRank == 2){
+				two++;
+			}
+			else if (tempRank == 3){
+				three++;
+			}
+			else if (tempRank == 4){
+				four++;
+			}
+			else if (tempRank == 5){
+				five++;
+			}
+			else if (tempRank == 6){
+				six++;
+			}
+			else if (tempRank == 7){
+				seven++;
+			}
+			else if (tempRank == 8){
+				eight++;
+			}
+			else if (tempRank == 9){
+				nine++;
+			}
+			else if (tempRank == 10){
+				ten++;
+			}
+			else if (tempRank == 11){
+				jack++;
+			}
+			else if (tempRank == 12){
+				queen++;
+			}
+			else if (tempRank == 13){
+				king++;
+			}
+			else if (tempRank == 14){
+				ace++;
+			}
+		}
+		if (ace >= num && ignoreValue != 14){
+			this.highRank1 = 14;
+			return 14;
+		}
+		
+		else if (king >= num && ignoreValue != 13){
+			this.highRank1 = 13;
+			return 13;
+		}
+		else if (queen >= num && ignoreValue != 12){
+			this.highRank1 = 12;
+			return 12;
+		}
+		else if (jack >= num && ignoreValue != 11){
+			this.highRank1 = 11;
+			return 11;
+		}
+		else if (ten == num && ignoreValue != 10){
+			this.highRank1 = 10;
+			return 10;
+		}
+		
+		else if (nine >= num && ignoreValue != 9){
+			this.highRank1 = 9;
+			return 9;
+		}
+		
+		else if (eight >= num && ignoreValue != 8){
+			this.highRank1 = 8;
+			return 8;
+		}
+		
+		else if (seven >= num && ignoreValue != 7){
+			this.highRank1 = 7;
+			return 7;
+		}
+		else if (six >= num && ignoreValue != 6){
+			this.highRank1 = 6;
+			return 6;
+		}
+		else if (five >= num && ignoreValue != 5){
+			this.highRank1 = 5;
+			return 5;
+		}
+		else if (four >= num && ignoreValue != 4){
+			this.highRank1 = 4;
+			return 4;
+		}
+		
+		else if (three >= num && ignoreValue != 3){
+			this.highRank1 = 3;
+			return 3;
+		}
+		
+		else if (two >= num && ignoreValue != 2){
+			this.highRank1 = 2;
+			return 2;
+		}
+		else{
+			this.highRank1 = 0;
+			return 0;
+		}
+	}
 	
-	public boolean checkFlush(Deck theDeck){
+	public int checkFullHouse(Deck deck){
+		//resetUtility();
+		int fullHouse1Check = checkNumOfAKind(deck,3, 0);
+		if (fullHouse1Check == 0){
+			return 0;
+		}
+		
+		int fullHouse2Check = checkNumOfAKind(deck,2, fullHouse1Check);
+		
+		if (fullHouse2Check == 0){
+			return 0;
+		}
+		else{
+			this.highRank1 = fullHouse1Check;
+			this.highRank2 = fullHouse2Check;
+			return highRank1;
+		}
+	}
+	
+	public String checkFlush(Deck theDeck){
 		int spadesCounter = 0;
 		int diamondCounter = 0;
 		int heartsCounter = 0;
 		int clubsCounter = 0;
+		
+		//theDeck = sortDeck(theDeck);
 
 	
 		for (int i = 0; i < theDeck.size() ; i++){
 			String tempSuit = theDeck.get(i).getSuit();
+			
+			
 			if (tempSuit.equals("Spades")){
 				spadesCounter++;
 			}
@@ -237,316 +594,132 @@ public class PokerUtility {
 			}
 		}
 		
-		if (spadesCounter >= 5 || diamondCounter >= 5
-			|| heartsCounter >=5 || clubsCounter >=5){
-				return true;
+		int exitCounter = 0;
+		
+		if (spadesCounter >= 5){
+			for (int i = theDeck.size()-1; i >=0 ; i--){
+				String tempSuit = theDeck.get(i).getSuit();
+				if (tempSuit.equals("Spades")){
+					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					exitCounter++;
+					if (exitCounter >= 5){
+						break;
+					}
+				}
 			}
+			return "Spades";
+		}
+		else if (diamondCounter >= 5){
+			for (int i = theDeck.size()-1; i >=0 ; i--){
+				String tempSuit = theDeck.get(i).getSuit();
+				if (tempSuit.equals("Diamonds")){
+					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					exitCounter++;
+					if (exitCounter >= 5){
+						break;
+					}
+				}
+			}
+			return "Diamonds";
+		}
+		else if (heartsCounter >= 5){
+			for (int i = theDeck.size()-1; i >=0 ; i--){
+				String tempSuit = theDeck.get(i).getSuit();
+				if (tempSuit.equals("Hearts")){
+					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					exitCounter++;
+					if (exitCounter >= 5){
+						break;
+					}
+				}
+			}
+			return "Hearts";
+		}
+		else if (clubsCounter >= 5){
+			for (int i = theDeck.size()-1; i >=0 ; i--){
+				String tempSuit = theDeck.get(i).getSuit();
+				if (tempSuit.equals("Clubs")){
+					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					exitCounter++;
+					if (exitCounter >= 5){
+						break;
+					}
+				}
+			}
+			return "Clubs";
+		}
 		else{
-			return false;
+			return "None";
 		}
 				
 		
 	}
 	
-	
-	public boolean checkStraightFlush(Deck theDeck){
-		if (checkStraight(theDeck) && checkFlush(theDeck)){
+	public boolean checkStraight(Deck theDeck){
+		//resetUtility();
+		boolean hasStraight = false;
+		int straightCounter = 0;
+		//theDeck = sortDeck(theDeck);
+
+		for (int i = 1; i < theDeck.size() ; i++){
+			if (theDeck.get(i-1).getNumericalRank() == theDeck.get(i).getNumericalRank()){
+				
+			}
+			else if (theDeck.get(i-1).getNumericalRank()+1 == theDeck.get(i).getNumericalRank()){
+				straightCounter++;
+				if (straightCounter >= 4){
+					this.highRank1 = theDeck.get(i).getNumericalRank();
+					hasStraight = true;
+				}
+			}
+			else{
+				straightCounter = 0;
+			}
+
+		}
+		if (hasStraight){
 			return true;
 		}
+		
 		return false;
 	}
 	
-	public int checkNumOfAKind(Deck theDeck, int num){
-		int two = 0;
-		int three = 0;
-		int four = 0;
-		int five = 0;
-		int six = 0;
-		int seven = 0;
-		int eight = 0;
-		int nine = 0;
-		int ten = 0;
-		int jack = 0;
-		int queen = 0;
-		int king = 0;
-		int ace = 0;
-
-		for (int i = 0; i < theDeck.size() ; i++){
-			int tempRank = theDeck.get(i).getRealNumRank();
-			
-			if (tempRank == 2){
-				two++;
-			}
-			else if (tempRank == 3){
-				three++;
-			}
-			else if (tempRank == 4){
-				four++;
-			}
-			else if (tempRank == 5){
-				five++;
-			}
-			else if (tempRank == 6){
-				six++;
-			}
-			else if (tempRank == 7){
-				seven++;
-			}
-			else if (tempRank == 8){
-				eight++;
-			}
-			else if (tempRank == 9){
-				nine++;
-			}
-			else if (tempRank == 10){
-				ten++;
-			}
-			else if (tempRank == 11){
-				jack++;
-			}
-			else if (tempRank == 12){
-				queen++;
-			}
-			else if (tempRank == 13){
-				king++;
-			}
-			else if (tempRank == 14){
-				ace++;
-			}
-		}
-		if (ace == num){
-			return 14;
-		}
-		
-		else if (king == num){
-			return 13;
-		}
-		else if (queen == num){
-			return 12;
-		}
-		else if (jack == num){
-			return 11;
-		}
-		else if (ten == num){
-			return 10;
-		}
-		
-		else if (nine == num){
-			return 9;
-		}
-		
-		else if (eight == num){
-			return 8;
-		}
-		
-		else if (seven == num){
-			return 7;
-		}
-		else if (six == num){
-			return 6;
-		}
-		else if (five == num){
-			return 5;
-		}
-		else if (four == num){
-			return 4;
-		}
-		
-		else if (three == num){
-			return 3;
-		}
-		
-		else if (two == num){
-			return 2;
-		}
-		else{
-			return 0;
-		}
-	}
-	
-	
-
-
-	public int checkFullHouse(Deck deck){
-		int threeOfAKind = checkNumOfAKind(deck,3);
-		int twoOfAKind = checkNumOfAKind(deck,2);
-		
-		if (threeOfAKind == 0 || twoOfAKind == 0){
-			return 0;
-		}
-		else{
-			return threeOfAKind;
-		}
-	}
-	
 	public int checkTwoPair(Deck theDeck){
-		int num = 2;
-		int two = 0;
-		int three = 0;
-		int four = 0;
-		int five = 0;
-		int six = 0;
-		int seven = 0;
-		int eight = 0;
-		int nine = 0;
-		int ten = 0;
-		int jack = 0;
-		int queen = 0;
-		int king = 0;
-		int ace = 0;
-
-		for (int i = 0; i < theDeck.size() ; i++){
-			int tempRank = theDeck.get(i).getRealNumRank();
-			
-			if (tempRank == 2){
-				two++;
-			}
-			else if (tempRank == 3){
-				three++;
-			}
-			else if (tempRank == 4){
-				four++;
-			}
-			else if (tempRank == 5){
-				five++;
-			}
-			else if (tempRank == 6){
-				six++;
-			}
-			else if (tempRank == 7){
-				seven++;
-			}
-			else if (tempRank == 8){
-				eight++;
-			}
-			else if (tempRank == 9){
-				nine++;
-			}
-			else if (tempRank == 10){
-				ten++;
-			}
-			else if (tempRank == 11){
-				jack++;
-			}
-			else if (tempRank == 12){
-				queen++;
-			}
-			else if (tempRank == 13){
-				king++;
-			}
-			else if (tempRank == 14){
-				ace++;
-			}
-		}
-		
-		int needs2 = 0;
-		
-		if (ace == num){
-			needs2++;
-		}
-		
-		if (king == num){
-			needs2++;
-		}
-		if (queen == num){
-			needs2++;
-		}
-		
-		if (jack == num){
-			needs2++;
-		}
-		
-		if (ten == num){
-			needs2++;
-		}
-		
-		if (nine == num){
-			needs2++;
-		}
-		
-		if (eight == num){
-			needs2++;
-		}
-		
-		if (seven == num){
-			needs2++;
-		}
-		
-		if (six == num){
-			needs2++;
-		}
-		
-		if (five == num){
-			needs2++;
-		}
-		
-		if (four == num){
-			needs2++;
-		}
-		
-		if (three == num){
-			needs2++;
-		}
-		
-		if (two == num){
-			needs2++;
-		}
-		
-		
-		
-		if (needs2++ < 2){
+		//resetUtility();
+		int value1 = checkNumOfAKind(theDeck,2, 0);
+		if (value1 == 0){
 			return 0;
 		}
-		else if (ace == num){
-			return 14;
-		}
 		
-		else if (king == num){
-			return 13;
-		}
-		else if (queen == num){
-			return 12;
-		}
-		else if (jack == num){
-			return 11;
-		}
-		else if (ten == num){
-			return 10;
-		}
+		int value2 = checkNumOfAKind(theDeck,2, value1);
 		
-		else if (nine == num){
-			return 9;
-		}
-		
-		else if (eight == num){
-			return 8;
-		}
-		
-		else if (seven == num){
-			return 7;
-		}
-		else if (six == num){
-			return 6;
-		}
-		else if (five == num){
-			return 5;
-		}
-		else if (four == num){
-			return 4;
-		}
-		
-		else if (three == num){
-			return 3;
-		}
-		
-		else if (two == num){
-			return 2;
+		if (value2 == 0){
+			return 0;
 		}
 		else{
-			return 0;
+			this.highRank1 = value1;
+			this.highRank2 = value2;
+			this.highRank3 = getHighCardNoMatter(value1, value2, theDeck);
+			return highRank1;
 		}
-
+		
+		
 	}
+	
+	public int getHighCardNoMatter(int ignore1, int ignore2, Deck deckGetHighCard){
+		int valueToReturn = 0;
+		for (int i = deckGetHighCard.size()-1 ; i >= 0; i--){
+			if (deckGetHighCard.get(i).getNumericalRank() != ignore1 && deckGetHighCard.get(i).getNumericalRank() != ignore2){
+				valueToReturn = deckGetHighCard.get(i).getNumericalRank();
+				break;
+			}
+		}
+		return valueToReturn;
+	}
+	
+	
+
 	
 	
 }
+

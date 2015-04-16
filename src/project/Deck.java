@@ -57,6 +57,7 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	/**
+	 * This method is to be deprecated. Please use dealNHands method.
 	 * Deals two hands of n number of cards using two decks.
 	 * Try block makes sure there are enough cards
 	 * in both decks to deal hand. If there are not 
@@ -82,6 +83,36 @@ public class Deck extends ArrayList<Card> {
 		return twoHands;
 	}
 	
+	
+	public ArrayList<Deck> dealNHands(Deck theDeck, int nCards, int nHands){
+		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
+		if (theDeck.size() >= nCards*nHands){
+			for (int d = 0; d < nHands; d++){
+				splitDeck.add(new Deck());
+			}
+			
+			for (int i = 0; i < nCards/nHands; i++){
+				for (int j = 0; j < splitDeck.size(); j++){
+					if (theDeck.size() <= 0){
+						return splitDeck;
+					}
+					else{
+						splitDeck.get(j).addCard(theDeck.drawCard(0));
+					}
+
+				}
+			}
+			
+		}
+		else{
+			splitDeck = divideDeck(theDeck, nHands);
+		}
+		
+		return splitDeck;
+	}
+	
+	
+	
 	/**
 	 * Splits deck into two equal parts and moves bottom half to top
 	 * @return a cut deck
@@ -102,6 +133,56 @@ public class Deck extends ArrayList<Card> {
 		splitDeck.add(d2);
 		return splitDeck;
 	}
+	
+	/**
+	 * 
+	 * @param deckToSplit
+	 * @param numDecks
+	 * @return
+	 */
+	public ArrayList<Deck> divideDeck(Deck deckToSplit, int numDecks){
+		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
+		for (int d = 0; d < numDecks; d++){
+			splitDeck.add(new Deck());
+		}
+		int numCardinDeck = deckToSplit.getSize();
+		
+		
+		for (int i = 0; i < numCardinDeck/numDecks; i++){
+			for (int j = 0; j < splitDeck.size(); j++){
+				splitDeck.get(j).addCard(deckToSplit.drawCard(0));
+			}
+		}
+		
+		splitDeck.add(deckToSplit);
+		return splitDeck;
+	}
+	
+	/**
+	 * 
+	 * @param deckToSplit
+	 * @param numDecks
+	 * @return
+	 */
+	public ArrayList<Deck> divideDeck(int numDecks){
+		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
+		for (int d = 0; d < numDecks; d++){
+			splitDeck.add(new Deck());
+		}
+		int numCardinDeck = this.getSize();
+		
+		
+		for (int i = 0; i < numCardinDeck/numDecks; i++){
+			for (int j = 0; j < splitDeck.size(); j++){
+				splitDeck.get(j).addCard(this.drawCard(0));
+			}
+		}
+		
+		splitDeck.add(this);
+		return splitDeck;
+	}
+	
+
 	
 	/**
 	 * Draws a card from this deck, remove this card from the deck.
@@ -130,34 +211,5 @@ public class Deck extends ArrayList<Card> {
 	public void addCard(Card e){
 		this.add(e);
 	}
-	
-	
-	//public Card
-	
-	/**
-	 * Instantiates a deck of cards with a standard deck.
-	 * Displays the deck of cards, removes a card and then 
-	 * adds the card back to the top of the deck
-	 * @param args
-	 */
-	public static void main(String args[]){
-		Deck d = new Deck();
-		d.standardFill();
-		for(int x=0;x<52;x++){
-			System.out.println(d.get(x).getCard());
-		}
-		System.out.println("this is the card you drew");
-		Card myCard = d.drawCard(DeckUtil.TOP_OF_DECK);
-		System.out.println(myCard.getCard());
-		System.out.println("Deck after you drew");
-		for(int x=0;x<51;x++){
-			System.out.println(d.get(x).getCard());
-		}
-		System.out.println("going to add a card to the deck");
-		d.add(myCard);
-		System.out.println("deck aftee the addition");
-		for(int x=0;x<52;x++){
-			System.out.println(d.get(x).getCard());
-		}
-	}
+
 }

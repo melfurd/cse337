@@ -25,6 +25,7 @@ public class TableTop extends JFrame implements ActionListener {
 	private JTextArea msg;
 	private CardGame game;
 	private ArrayList<JButton> actions;
+	private ArrayList<JTextArea> hands;
 
 	
 	/**
@@ -44,17 +45,21 @@ public class TableTop extends JFrame implements ActionListener {
 		JPanel tablePanel = new JPanel();
 		JPanel messagePanel = new JPanel();
 		table = new JTextArea(10,40);
-		msg = new JTextArea(10,40);
+		msg = new JTextArea(10,80);
+		
 		if(game.usesHand()){
+			this.hands = new ArrayList<JTextArea>();
 			for(int x = 0;x<game.players();x++){
 				JTextArea hand = new JTextArea(10,10);
 				hand.setEditable(false);
 				JFrame j = new JFrame("player "+(x+1)+" Hand");
+				this.hands.add(hand);
 				j.setSize(200, 200);
 				j.setVisible(true);
 				j.setLocation(600+20*x, 0);
 				j.add(hand);
 			}
+			displayHands();
 		}
 		table.setEditable(false);
 		JScrollPane scroll = new JScrollPane (table);
@@ -85,14 +90,23 @@ public class TableTop extends JFrame implements ActionListener {
 		}
 		msg.append(game.getMessage());
 		game.clearMessage();
+		if(game.usesHand()){
+			displayHands();
+		}
 	}
 	
+	
+	public void displayHands(){
+		for(int x = 0;x< hands.size();x++){
+			hands.get(x).setText(game.getHand(x));
+		}
+	}
 	/**
 	 * @param args
 	 */
 	public static void main(String args[]){
-		CardGame w = new War();
-		//CardGame w = new Poker();
+		//CardGame w = new War();
+		CardGame w = new Poker2();
 		TableTop t = new TableTop(w);
 	}
 }

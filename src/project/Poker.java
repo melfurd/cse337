@@ -23,6 +23,8 @@ public class Poker implements CardGame{
 		d.standardFill();
 		winner = new JButton("Winner");
 		deal = new JButton("Deal");
+		this.player1Cards = new Deck();
+		this.player2Cards = new Deck();
 		
 	}
 
@@ -30,62 +32,34 @@ public class Poker implements CardGame{
 	@Override
 	public void ActionListener(ActionEvent e) {
 		if(e.getSource()== deal && dealCards){
+			this.player1Cards = new Deck();
+			this.player2Cards = new Deck();
 			clearMessage();
 			stringBuilder = new StringBuilder();
 			d = new Deck();
 			d.standardFill();
 			cardNumber = 0;
-			this.player1Cards = new Deck();
-			this.player2Cards = new Deck();
 			//1
-			player1Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			player2Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
+			player1Cards.addCard(d.drawCard(0));
+			player2Cards.addCard(d.drawCard(0));
 			
 			//2
-			player1Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			player2Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			
+			player1Cards.addCard(d.drawCard(0));
+			player2Cards.addCard(d.drawCard(0));
 			//3
-			player1Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			player2Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
+			player1Cards.addCard(d.drawCard(0));
+			player2Cards.addCard(d.drawCard(0));
 			
 			//4
-			player1Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			player2Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
+			player1Cards.addCard(d.drawCard(0));
+			player2Cards.addCard(d.drawCard(0));
 			
 			//5
-			player1Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			player2Cards.addCard(d.drawCard(cardNumber));
-			cardNumber++;
-			
+			player1Cards.addCard(d.drawCard(0));
+			player2Cards.addCard(d.drawCard(0));
 			
 			dealCards = false;
 			winCards = true;
-			
-			stringBuilder.append("Player One\n");
-				for (int i = 0; i < player1Cards.size() ; i++){
-				stringBuilder.append(player1Cards.get(i).getSuit() + " " + player1Cards.get(i).getRank() + "\n");
-			}
-				
-			stringBuilder.append("\n");
-			
-			stringBuilder.append("Player Two\n");
-			for (int i = 0; i < player2Cards.size() ; i++){
-				stringBuilder.append(player2Cards.get(i).getSuit() + " " + player2Cards.get(i).getRank() + "\n");
-			}
-			
-			sendMessage(stringBuilder.toString());
-			
-			
 		}
 		else if (e.getSource() == winner && winCards){
 
@@ -153,7 +127,7 @@ public class Poker implements CardGame{
 	 */
 	@Override
 	public boolean usesHand() {
-		return false;
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -170,8 +144,22 @@ public class Poker implements CardGame{
 	 * @see CardGame#getHand(int)
 	 */
 	@Override
-	public ArrayList<Card> getHand(int x) {
-		return null;
+	public String getHand(int x) {
+		String theHand ="";
+		if(x==0){
+			for(int y=0;y<player1Cards.size();y++){
+				theHand = theHand+player1Cards.get(y).getCard()+"\n";
+			}
+		}
+		else if(x==1){
+			for(int y=0;y<player2Cards.size();y++){
+				theHand = theHand+player2Cards.get(y).getCard()+"\n";
+			}
+		}
+		else{
+			return null;
+		}
+		return theHand;
 	}
 	
 
@@ -346,6 +334,10 @@ public class Poker implements CardGame{
 			stringBuilder.append("Player 2 has 2 of a kind being " + secondPlayerValue + "\n");
 			return false;
 		}
+		else if (firstPlayerValue == secondPlayerValue){
+			stringBuilder.append("Tie of a kind being " + secondPlayerValue + "\n");
+			return false;
+		}
 		
 		
 		//High Card
@@ -369,7 +361,7 @@ public class Poker implements CardGame{
 	public Deck sortDeck(Deck theDeck){
 		Collections.sort(theDeck, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		return theDeck;
@@ -379,7 +371,7 @@ public class Poker implements CardGame{
 	public boolean checkStraight(Deck theDeck){
 		Collections.sort(theDeck, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
-				return s1.getRank().compareTo(s2.getRank());
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
 			}
 		});
 		int straightCounter = 0;
