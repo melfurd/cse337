@@ -2,6 +2,7 @@ package project;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 
 /**
@@ -22,7 +23,7 @@ public class Deck extends ArrayList<Card> {
 	/**
 	 * Fills deck with a shuffled standard deck of cards
 	 * including 52 cards with 13 in each suit
-	 * ranking from 1 to 13.
+	 * ranking from 0 to 12.
 	 */
 	public void standardFill(){
 		nCards=52;
@@ -211,5 +212,83 @@ public class Deck extends ArrayList<Card> {
 	public void addCard(Card e){
 		this.add(e);
 	}
+	
+	/**
+	 * Sorts the Deck, according to the rank, does not matter what the suit is.
+	 * @param theDeck Input Deck
+	 * @return Returns sorted deck that sorts by numRank
+	 */
+	public Deck sortDeckByNumRank(Deck theDeck){
+		Collections.sort(theDeck, new Comparator<Card>(){
+			public int compare(Card s1, Card s2){
+				return s1.getCompareToRank().compareTo(s2.getCompareToRank());
+			}
+		});
+		return theDeck;
+	}
+
+/**
+ * Method sorts the deck by suit depending on the order you would like it by
+ * the different param inputs.
+ * @param theDeck
+ * @param cardType1 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+ * @param cardType2 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+ * @param cardType3 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+ * @param cardType4 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+ * @return Returns the deck in the order of the card Type Inputs
+ * Warning: if the input types are duplicate, it will add duplicates of the card
+ * I.E. if theDeck has 2 hearts, and you have cardType1 and cardType2 as "Hearts"
+ * the deck will have the 2 hearts twice
+ * Warning: if you do not input the correct type of card, it will not add whatever
+ * type you are missing or the incorrect type of card
+ */
+	public Deck sortDeckBySuit(Deck theDeck, String cardType1,
+			String cardType2, String cardType3, String cardType4){
+		Deck theNewDeck = new Deck();
+		for (int i = 0; i < theDeck.size(); i++){
+			if (theDeck.get(i).getSuit().equals(cardType1)){
+				theNewDeck.add(theDeck.get(i));
+			}
+		}
+		for (int i = 0; i < theDeck.size(); i++){
+			if (theDeck.get(i).getSuit().equals(cardType2)){
+				theNewDeck.add(theDeck.get(i));
+			}
+		}
+		for (int i = 0; i < theDeck.size(); i++){
+			if (theDeck.get(i).getSuit().equals(cardType3)){
+				theNewDeck.add(theDeck.get(i));
+			}
+		}
+		for (int i = 0; i < theDeck.size(); i++){
+			if (theDeck.get(i).getSuit().equals(cardType4)){
+				theNewDeck.add(theDeck.get(i));
+			}
+		}
+		
+		
+		return theNewDeck;
+	}
+	
+	/**
+	 * Method sorts the deck by suit and will be placed in order depending on the order you would like it by
+	 * the different param inputs.
+	 * @param theDeck
+	 * @param cardType1 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+	 * @param cardType2 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+	 * @param cardType3 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+	 * @param cardType4 Input: "Hearts", "Diamonds", "Spades", "Clubs"
+	 * @return Returns the deck in the order of the card Type Inputs
+	 * Warning: if the input types are duplicate, it will add duplicates of the card
+	 * I.E. if theDeck has 2 hearts, and you have cardType1 and cardType2 as "Hearts"
+	 * the deck will have the 2 hearts twice and in order
+	 * Warning: if you do not input the correct type of card, it will not add whatever
+	 * type you are missing or the incorrect type of card
+	 */
+		public Deck sortDeckBySuitAndRank(Deck theDeck, String cardType1,
+				String cardType2, String cardType3, String cardType4){
+				Deck theNewDeck = sortDeckByNumRank(theDeck);
+				return sortDeckBySuit(theNewDeck, cardType1, cardType2, cardType3, cardType4);
+		}
 
 }

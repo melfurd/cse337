@@ -18,6 +18,9 @@ public class Poker implements CardGame{
 	private boolean winCards = false;
 	private String message;
 
+	/**
+	 * Constructor that creates 2 decks
+	 */
 	public Poker(){
 		d = new Deck();
 		d.standardFill();
@@ -542,9 +545,6 @@ public class Poker implements CardGame{
 		}
 	}
 	
-	
-
-
 	public int checkFullHouse(Deck deck){
 		int threeOfAKind = checkNumOfAKind(deck,3);
 		int twoOfAKind = checkNumOfAKind(deck,2);

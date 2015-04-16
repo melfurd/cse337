@@ -3,8 +3,15 @@ package project;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Poker Utility that can be used to compare decks to 
+ * determine which deck wins, as well as compare two decks
+ * Can also be used to determine if a deck meets a certain case;
+ * @author Stuart Nolton and Mel Chi
+ * @version 2.2 - 2015-04-13
+ * @since   1.0 - 2015-03-31 
+ */
 public class PokerUtility {
-
 	
 	private int player1MainRank = 0;
 	private int player1SecondRank = 0;
@@ -14,27 +21,56 @@ public class PokerUtility {
 	private int player2SecondRank = 0;
 	private int player2ThirdRank = 0;
 	
+	/**
+	 * int that holds the highRank data
+	 * For straights, it holds the highest value in a straight
+	 * For n of a kind, it holds the highest value of n of a kind
+	 */
 	public int highRank1 = 0;
+	/**
+	 * Flush, holds highest flush value card
+	 */
 	public int highRank2 = 0;
+	/**
+	 * Holds the highest value of non importance for kicker
+	 */
 	public int highRank3 = 0;
 	
 	private boolean firstPlayer = false;
 	private boolean secondPlayer = false;
 	
+	/**
+	 * Accessable Boolean to determine if there was a tie
+	 */
 	public boolean tieDeck = false;
+	/**
+	 * Acccessable message to grab to display if necessary
+	 */
 	public String cardMessage = "";
 	Deck first;
 	Deck second;
 	
+	/**
+	 * Default constructor, that way you can use this class for methods
+	 */
 	public PokerUtility(){
 		
 	}
 	
+	/**
+	 * Constructor that takes in two decks of cards, and will be able to
+	 * manipulate the data.
+	 * @param first First Deck
+	 * @param second Second Deck
+	 */
 	public PokerUtility(Deck first, Deck second){
 		this.first = first;
 		this.second = second;
 	}
 	
+	/**
+	 * Reset Utility
+	 */
 	private void resetUtility(){
 		this.player1MainRank = 0;
 		this.player1SecondRank = 0;
@@ -48,18 +84,31 @@ public class PokerUtility {
 		resetCardRank();
 	}
 	
+	/**
+	 * Reset utility to put back 2 decks
+	 * @param first First Deck
+	 * @param second Second Deck
+	 */
 	public void resetUtility(Deck first, Deck second){
 		resetUtility();
-		this.first = first;
-		this.second = second;
+		this.first = sortDeck(first);
+		this.second = sortDeck(second);
 	}
 	
+	/**
+	 * resets high rank
+	 */
 	public void resetCardRank(){
 		this.highRank1 = 0;
 		this.highRank2 = 0;
 		this.highRank3 = 0;
 	}
 		
+	/** public method to sort decks
+	 * 
+	 * @param theDeck
+	 * @return
+	 */
 	public Deck sortDeck(Deck theDeck){
 		Collections.sort(theDeck, new Comparator<Card>(){
 			public int compare(Card s1, Card s2){
@@ -716,6 +765,45 @@ public class PokerUtility {
 		}
 		return valueToReturn;
 	}
+	
+	
+	public boolean compareTwoDecksForStraightFlush(Deck first, Deck second){
+		this.firstPlayer = checkStraightFlush(first);
+		this.player1MainRank = this.highRank1;
+		
+		this.secondPlayer = checkStraightFlush(second);
+		this.player2MainRank = this.highRank1;
+		
+		// IF BOTH HAVE A STRAIGHT FLUSH NEED TO COMPARE RANK
+		if (firstPlayer && secondPlayer){
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				return false;
+			}
+			else{
+				this.tieDeck = true;
+				return true;
+			}
+		}
+		else if (firstPlayer){ //ONLY FIRST PLAYER HAS
+			this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+			return true;
+		}
+		else if (secondPlayer){ //ONLY SECOND PLAYER HAS
+			this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
+			return false;
+		}
+		else{
+			this.cardMessage = "No Player has straight flush";
+			return false;
+		}
+		
+	}
+	
 	
 	
 
