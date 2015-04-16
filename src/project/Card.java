@@ -183,6 +183,7 @@ public class Card {
 	}
 	
 	/**
+	 * This method is being deprecated, please use getRealNumRank
 	 * Returns a numerical representation of this card's rank,
 	 * starting from 2 to 14, the actual values of poker.
 	 * This is an equivalent method to getRealNumRank
@@ -193,7 +194,7 @@ public class Card {
 	}
 	
 	/**
-	 * This is equivalent to getNumericalRank. returns a numerical
+	 * returns a numerical
 	 * representation of this card's rank, starting from 2 to 14, 
 	 * the actual values of poker
 	 * @return an integer representation of this card's rank
@@ -203,84 +204,7 @@ public class Card {
 		return numRank+2;
 	}
 	
-	/**
-	 * Converts the Rank to a String. i.e. input is 0, and will return "2";
-	 * If you have the value of RealNumRank of cards, use the convertRealNumRanktoRank method
-	 * @param numRank, value of cards from 0 to 12
-	 * @return Rank
-	 */
-	public String convertNumRanktoRank(int numRank){
-		switch(numRank){
-		case 0:
-			return "2";
-		case 1:
-			return "3";
-		case 2:
-			return "4";
-		case 3:
-			return "5";
-		case 4:
-			return "6";
-		case 5:
-			return "7";
-		case 6:
-			return "8";
-		case 7:
-			return "9";
-		case 8:
-			return "10";
-		case 9:
-			return "Jack";
-		case 10:
-			return "Queen";
-		case 11:
-			return "King";
-		case 12:
-			return "Ace";
-		default:
-			return "N/A";
-		}
-	}
-	
-	/**
-	 * Converts the Rank to a String. i.e. input is 2, and will return "2";
-	 * If you have the value of NumRank of cards (i.e input 0 means "2", use the convertNumRanktoRank method
-	 * @param numRank, value of cards from 0 to 12
-	 * @return Rank
-	 */
-	public String convertRealNumRanktoRank(int realNumRank){
-		switch(realNumRank-2){
-		case 0:
-			return "2";
-		case 1:
-			return "3";
-		case 2:
-			return "4";
-		case 3:
-			return "5";
-		case 4:
-			return "6";
-		case 5:
-			return "7";
-		case 6:
-			return "8";
-		case 7:
-			return "9";
-		case 8:
-			return "10";
-		case 9:
-			return "Jack";
-		case 10:
-			return "Queen";
-		case 11:
-			return "King";
-		case 12:
-			return "Ace";
-		default:
-			return "N/A";
-		}
-	}
-	
+
 	
 	/**
 	 * returns this card as a String in the form rank+" of "+suit. if the card is face down then an empty string is returned.

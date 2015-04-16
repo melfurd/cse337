@@ -119,10 +119,11 @@ public class PokerUtility {
 	}
 	
 	/**
-	 * 
-	 * @param first
-	 * @param second
-	 * @return true if first deck wins
+	 * Compares two decks starting from straightflush, 4 of a kind, fullhouse
+	 * flush, three of a kind, two pairs, two of a kind, high card
+	 * @param first First deck
+	 * @param second Second Deck
+	 * @return true if first deck wins, true if a tie and the object.tieDeck is true
 	 */
 	public boolean compareDecks(Deck first, Deck second){
 		resetUtility();
@@ -447,6 +448,11 @@ public class PokerUtility {
 
 	}
 		
+	/**
+	 * Checks if it is a Straight Flush
+	 * @param theDeck the deck to analyze
+	 * @return Returns true if is a straight flush, false if it is not.
+	 */
 	public boolean checkStraightFlush(Deck theDeck){
 		//resetUtility();
 		String flush = ""; 
@@ -474,6 +480,13 @@ public class PokerUtility {
 		return false;
 	}
 	
+	/**
+	 * Checks if you have the n number of kind.
+	 * @param theDeck Input deck
+	 * @param num the number of occurances 
+	 * @param ignoreValue, input an ignore value, useful when looking for two pair or full house
+	 * @return return the int of the highest value, returns 0 if there are no n of a kind
+	 */
 	public int checkNumOfAKind(Deck theDeck, int num, int ignoreValue){
 		//resetUtility();
 		int two = 0;
@@ -597,6 +610,12 @@ public class PokerUtility {
 		}
 	}
 	
+	/**
+	 * Check if a deck has a full house
+	 * @param deck
+	 * @return returns the int value of the 3 of a kind, if it returns 0,
+	 * There is no full house
+	 */
 	public int checkFullHouse(Deck deck){
 		//resetUtility();
 		int fullHouse1Check = checkNumOfAKind(deck,3, 0);
@@ -616,6 +635,11 @@ public class PokerUtility {
 		}
 	}
 	
+	/**
+	 * Checks if the deck has a flush
+	 * @param theDeck
+	 * @return Returns the string of the type of flush, returns "N/A" if no flush
+	 */
 	public String checkFlush(Deck theDeck){
 		int spadesCounter = 0;
 		int diamondCounter = 0;
@@ -704,6 +728,11 @@ public class PokerUtility {
 		
 	}
 	
+	/**
+	 * Checks if the deck has a straight
+	 * @param theDeck
+	 * @return returns true if there is a straight
+	 */
 	public boolean checkStraight(Deck theDeck){
 		//resetUtility();
 		boolean hasStraight = false;
@@ -733,6 +762,12 @@ public class PokerUtility {
 		return false;
 	}
 	
+	/**
+	 * Checks if has two pairs
+	 * @param theDeck
+	 * @return highest pair,  highRank2 will hold the 2nd pair value
+	 * and highRank3 will return the highest kicker
+	 */
 	public int checkTwoPair(Deck theDeck){
 		//resetUtility();
 		int value1 = checkNumOfAKind(theDeck,2, 0);
@@ -755,6 +790,13 @@ public class PokerUtility {
 		
 	}
 	
+	/**
+	 * Gets the highest card that doesn't matter for n number of cards and 2 pairs
+	 * @param ignore1 the value of the card
+	 * @param ignore2 set as 0 or 1 if you do not need it
+	 * @param deckGetHighCard
+	 * @return
+	 */
 	public int getHighCardNoMatter(int ignore1, int ignore2, Deck deckGetHighCard){
 		int valueToReturn = 0;
 		for (int i = deckGetHighCard.size()-1 ; i >= 0; i--){
@@ -766,7 +808,12 @@ public class PokerUtility {
 		return valueToReturn;
 	}
 	
-	
+	/**
+	 * Compares two decks for straight flush
+	 * @param first Deck1
+	 * @param second Deck2
+	 * @return true if first card is higher
+	 */
 	public boolean compareTwoDecksForStraightFlush(Deck first, Deck second){
 		this.firstPlayer = checkStraightFlush(first);
 		this.player1MainRank = this.highRank1;
@@ -805,7 +852,100 @@ public class PokerUtility {
 	}
 	
 	
+	/**
+	 * Converts the Rank to a String. i.e. input is 0, and will return "2";
+	 * If you have the value of RealNumRank of cards, use the convertRealNumRanktoRank method
+	 * @param numRank, value of cards from 0 to 12
+	 * @return Rank from "2" to "Ace", if the rank does not exist, it will return "N/A"
+	 */
+	public String convertNumRankToRank(int numRank){
+		switch(numRank){
+		case 0:
+			return "2";
+		case 1:
+			return "3";
+		case 2:
+			return "4";
+		case 3:
+			return "5";
+		case 4:
+			return "6";
+		case 5:
+			return "7";
+		case 6:
+			return "8";
+		case 7:
+			return "9";
+		case 8:
+			return "10";
+		case 9:
+			return "Jack";
+		case 10:
+			return "Queen";
+		case 11:
+			return "King";
+		case 12:
+			return "Ace";
+		default:
+			return "N/A";
+		}
+	}
 	
+	/**
+	 * Converts the Rank to a String. i.e. input is 2, and will return "2";
+	 * If you have the value of NumRank of cards (i.e input 0 means "2", use the convertNumRanktoRank method
+	 * @param numRank, value of cards from 0 to 12
+	 * @return Rank
+	 */
+	public String convertRealNumRankToRank(int realNumRank){
+		return convertNumRankToRank(realNumRank-2);
+	}
+	
+	/**
+	 * Returns num Rank from rank
+	 * @param rank
+	 * @return Returns the Num Rank from given rank, will return -1 if rank does not exist
+	 */
+	public int convertRankToNumRank(String rank){
+		switch(rank){
+		case "0":
+		case "1":
+		case "2":
+		case "3":
+		case "4":
+		case "5":
+		case "6":
+		case "7":
+		case "8":
+			int hello = Integer.parseInt("rank");
+			return hello;
+		case "Jack":
+			return 9;
+		case "Queen":
+			return 10;
+		case "King":
+			return 11;
+		case "Ace":
+			return 12;
+		default:
+			return -1;
+		}
+	}
+	
+	/**
+	 * Returns rank to real num rank
+	 * @param rank
+	 * @return Returns the Real Num Rank from given rank, will return -1 if rank does not exist
+	 */
+	public int convertRankToRealNumRank(String rank){
+		int temp = convertRankToNumRank(rank);
+		if (temp == -1){
+			return -1;
+		}
+		else{
+			return temp+2;
+		}
+	}
 
 	
 	

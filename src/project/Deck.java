@@ -104,6 +104,13 @@ public class Deck extends ArrayList<Card> {
 				}
 			}
 			
+			int leftOverDeckSize = theDeck.size();
+			Deck leftOverDeck = new Deck();
+			while (leftOverDeckSize > 0){
+				leftOverDeck.add(theDeck.drawCard(0));
+				leftOverDeckSize--;
+			}
+			
 		}
 		else{
 			splitDeck = divideDeck(theDeck, nHands);
