@@ -44,8 +44,9 @@ public class Deck extends ArrayList<Card> {
 	 * Deals a hand of n number of cards. Try block makes sure there
 	 * are enough cards in the deck to complete hand. If
 	 * there are not enough cards a message is printed.
-	 * @param nCards
+	 * @param nCards Number of cards you want to add
 	 * @return one hand of n cards
+	 * Warning: will not overdeal cards, will end when the deck is drawn
 	 */
 	public Deck dealHand(int nCards){
 		Deck hand = new Deck();
@@ -66,7 +67,7 @@ public class Deck extends ArrayList<Card> {
 	 * Try block makes sure there are enough cards
 	 * in both decks to deal hand. If there are not 
 	 * enough cards a message is printed.
-	 * @param nCards
+	 * @param nCards Number of cards
 	 * @return two hands of n cards
 	 * @deprecated 
 	 */
@@ -92,10 +93,10 @@ public class Deck extends ArrayList<Card> {
 	 * Deals nHands given the deck to deal, the number of cards per deck and hands
 	 * If there are not enough cards it will deal it evenly and the last extra deck
 	 * contains the extra cards
-	 * @param theDeck
-	 * @param nCards
-	 * @param nHands
-	 * @return
+	 * @param theDeck The input deck to deal to hands
+	 * @param nCards The number of cards to be dealt per hand
+	 * @param nHands The number of hands (deck)
+	 * @return Returns the splitteddeck
 	 */
 	public ArrayList<Deck> dealNHands(Deck theDeck, int nCards, int nHands){
 		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
@@ -160,7 +161,7 @@ public class Deck extends ArrayList<Card> {
 	 * arrayList returned.
 	 * @param deckToSplit The deck to split
 	 * @param numDecks Number of decks
-	 * @return
+	 * @return The splitted deck, the last deck will have the overflow
 	 */
 	public ArrayList<Deck> divideDeck(Deck deckToSplit, int numDecks){
 		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
@@ -181,10 +182,9 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	/**
-	 * 
-	 * @param deckToSplit
-	 * @param numDecks
-	 * @return
+	 * The deck to divide
+	 * @param numDecks The number of decks you want to divde the deck to
+	 * @return Returns the splitted deck
 	 */
 	public ArrayList<Deck> divideDeck(int numDecks){
 		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
@@ -208,7 +208,7 @@ public class Deck extends ArrayList<Card> {
 	
 	/**
 	 * Draws a card from this deck, remove this card from the deck.
-	 * @param index
+	 * @param index The index of the card in the deck you want to remove
 	 * @return drawn card
 	 */
 	public Card drawCard(int index){
@@ -228,7 +228,7 @@ public class Deck extends ArrayList<Card> {
 	
 	/**
 	 * Adds a card to the deck
-	 * @param e
+	 * @param e The card object that you want to add to the deck
 	 */
 	public void addCard(Card e){
 		this.add(e);
@@ -251,7 +251,7 @@ public class Deck extends ArrayList<Card> {
 /**
  * Method sorts the deck by suit depending on the order you would like it by
  * the different param inputs.
- * @param theDeck
+ * @param theDeck The deck you want to sort by suit
  * @param cardType1 Input: "Hearts", "Diamonds", "Spades", "Clubs"
  * @param cardType2 Input: "Hearts", "Diamonds", "Spades", "Clubs"
  * @param cardType3 Input: "Hearts", "Diamonds", "Spades", "Clubs"
@@ -294,7 +294,7 @@ public class Deck extends ArrayList<Card> {
 	/**
 	 * Method sorts the deck by suit and will be placed in order depending on the order you would like it by
 	 * the different param inputs.
-	 * @param theDeck
+	 * @param theDeck The deck that you want to sort
 	 * @param cardType1 Input: "Hearts", "Diamonds", "Spades", "Clubs"
 	 * @param cardType2 Input: "Hearts", "Diamonds", "Spades", "Clubs"
 	 * @param cardType3 Input: "Hearts", "Diamonds", "Spades", "Clubs"
@@ -303,7 +303,7 @@ public class Deck extends ArrayList<Card> {
 	 * Warning: if the input types are duplicate, it will add duplicates of the card
 	 * I.E. if theDeck has 2 hearts, and you have cardType1 and cardType2 as "Hearts"
 	 * the deck will have the 2 hearts twice and in order
-	 * Warning: if you do not input the correct type of card, it will not add whatever
+	 *	Warning: if you do not input the correct type of card, it will not add whatever
 	 * type you are missing or the incorrect type of card
 	 */
 		public Deck sortDeckBySuitAndRank(Deck theDeck, String cardType1,

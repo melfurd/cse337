@@ -32,7 +32,7 @@ public class TableTop extends JFrame implements ActionListener {
 	 * Based on the game that is passed in as parameter
 	 * the table top do the actions needed for that game
 	 * and set up a space canvas for objects to be placed
-	 * @param game
+	 * @param game The cardgame you want to use, see Poker and War
 	 */
 	public TableTop(CardGame game){
 		this.game = game;
@@ -95,30 +95,18 @@ public class TableTop extends JFrame implements ActionListener {
 		}
 	}
 	
-	
+	/**
+	 * displays the hands by the given game
+	 */
 	public void displayHands(){
 		for(int x = 0;x< hands.size();x++){
 			hands.get(x).setText(game.getHand(x));
 		}
 	}
-	/**
-	 * @param args
-	 */
 	
-	public TableTop(String gameName){
-		CardGame w;
-		if (gameName.equals("a")){
-			w = new War();
-		}
-		else{
-			w = new Poker2();
-		}
-		TableTop t = new TableTop(w);
-	}
-	
-	public static void main(String args[]){
+	//public static void main(String args[]){
 		//CardGame w = new War();
-		CardGame w = new Poker2();
-		TableTop t = new TableTop(w);
-	}
+		//CardGame w = new Poker2();
+		//TableTop t = new TableTop(w);
+	//}
 }

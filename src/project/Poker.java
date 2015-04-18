@@ -6,6 +6,11 @@ import java.util.*;
 import javax.swing.JButton;
 
 
+/**
+ * Original poker game, has a few bugs, fixed mostly in PokerUtil and Poker2
+ * @author Mel and Stuart
+ *
+ */
 public class Poker implements CardGame{
 	
 	private Deck d;
@@ -165,7 +170,9 @@ public class Poker implements CardGame{
 		return theHand;
 	}
 	
-
+	/**
+	 * Determines who wins and gives the string
+	 */
 	public void whoWins(){
 		
 		stringBuilder = new StringBuilder();

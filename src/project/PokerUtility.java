@@ -106,8 +106,8 @@ public class PokerUtility {
 		
 	/** public method to sort decks
 	 * 
-	 * @param theDeck
-	 * @return
+	 * @param theDeck The deck to sort
+	 * @return The deck sorted
 	 */
 	public Deck sortDeck(Deck theDeck){
 		Collections.sort(theDeck, new Comparator<Card>(){
@@ -132,7 +132,7 @@ public class PokerUtility {
 		second = sortDeck(second);
 		
 		//STRAIGHT FLUSH
-		System.out.println("StraightFlush");
+		//System.out.println("StraightFlush");
 		this.firstPlayer = checkStraightFlush(first);
 		this.player1MainRank = this.highRank1;
 		
@@ -165,7 +165,7 @@ public class PokerUtility {
 		
 		
 		// Check 4 of a kind
-		System.out.println("4");
+		//System.out.println("4");
 		this.player1MainRank = checkNumOfAKind(first, 4, 0);
 		this.player2MainRank = checkNumOfAKind(second, 4, 0);
 		
@@ -204,7 +204,7 @@ public class PokerUtility {
 		}
 		
 		//Full House
-		System.out.println("full");
+		//System.out.println("full");
 		this.player1MainRank = checkFullHouse(first);
 		this.player1SecondRank = this.highRank2; 
 		this.player2MainRank = checkFullHouse(second);
@@ -345,11 +345,15 @@ public class PokerUtility {
 		}
 		else{
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a 2 pairs of kind with " + convertRealNumRankToRank(player1MainRank);
+				this.cardMessage = "Player wins with a 2 pairs with 2 " 
+						+ convertRealNumRankToRank(player1MainRank) + " and 2 "
+						+ convertRealNumRankToRank(player1SecondRank);
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a 2 pairs of a kind with " + convertRealNumRankToRank(player2MainRank);
+				this.cardMessage = "Player wins with a 2 pairs with 2 " 
+						+ convertRealNumRankToRank(player2MainRank) + " and 2 "
+						+ convertRealNumRankToRank(player2SecondRank);
 				return false;
 			}
 			else{
@@ -441,7 +445,6 @@ public class PokerUtility {
 			return false;
 		}
 		else{
-			int exitCounter = 0;
 			player1MainRank = 0;
 			player2MainRank = 0;
 			
@@ -456,10 +459,6 @@ public class PokerUtility {
 					return false;
 				}
 				
-				exitCounter++;
-				if (exitCounter >= 5){
-					break;
-				}
 			}
 		}
 			
@@ -633,7 +632,7 @@ public class PokerUtility {
 	
 	/**
 	 * Check if a deck has a full house
-	 * @param deck
+	 * @param deck The deck you want to check for a full house
 	 * @return returns the int value of the 3 of a kind, if it returns 0,
 	 * There is no full house
 	 */
@@ -658,7 +657,7 @@ public class PokerUtility {
 	
 	/**
 	 * Checks if the deck has a flush
-	 * @param theDeck
+	 * @param theDeck The deck you want to check for a flush
 	 * @return Returns the string of the type of flush, returns "N/A" if no flush
 	 */
 	public String checkFlush(Deck theDeck){
@@ -751,7 +750,7 @@ public class PokerUtility {
 	
 	/**
 	 * Checks if the deck has a straight
-	 * @param theDeck
+	 * @param theDeck The deck you want to check if it has a straight
 	 * @return returns true if there is a straight
 	 */
 	public boolean checkStraight(Deck theDeck){
@@ -785,7 +784,7 @@ public class PokerUtility {
 	
 	/**
 	 * Checks if has two pairs
-	 * @param theDeck
+	 * @param theDeck The deck
 	 * @return highest pair,  highRank2 will hold the 2nd pair value
 	 * and highRank3 will return the highest kicker
 	 */
@@ -815,8 +814,8 @@ public class PokerUtility {
 	 * Gets the highest card that doesn't matter for n number of cards and 2 pairs
 	 * @param ignore1 the value of the card
 	 * @param ignore2 set as 0 or 1 if you do not need it
-	 * @param deckGetHighCard
-	 * @return
+	 * @param deckGetHighCard The deck you want to find the high card in
+	 * @return the value in a int of the highest rank of card
 	 */
 	public int getHighCardNoMatter(int ignore1, int ignore2, Deck deckGetHighCard){
 		int valueToReturn = 0;
@@ -915,8 +914,8 @@ public class PokerUtility {
 	/**
 	 * Converts the Rank to a String. i.e. input is 2, and will return "2";
 	 * If you have the value of NumRank of cards (i.e input 0 means "2", use the convertNumRanktoRank method
-	 * @param numRank, value of cards from 0 to 12
-	 * @return Rank
+	 * @param realNumRank, value of cards from 0 to 12
+	 * @return Rank Returns the rank as a string
 	 */
 	public String convertRealNumRankToRank(int realNumRank){
 		return convertNumRankToRank(realNumRank-2);
@@ -924,7 +923,7 @@ public class PokerUtility {
 	
 	/**
 	 * Returns num Rank from rank
-	 * @param rank
+	 * @param rank The rank in a string
 	 * @return Returns the Num Rank from given rank, will return -1 if rank does not exist
 	 */
 	public int convertRankToNumRank(String rank){
@@ -955,7 +954,7 @@ public class PokerUtility {
 	
 	/**
 	 * Returns rank to real num rank
-	 * @param rank
+	 * @param rank Rank
 	 * @return Returns the Real Num Rank from given rank, will return -1 if rank does not exist
 	 */
 	public int convertRankToRealNumRank(String rank){

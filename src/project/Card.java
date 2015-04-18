@@ -7,6 +7,7 @@ package project;
  * @version 2.0 2015-04-13
  * @since   version 1.0 2015-03-31 
  */
+
 public class Card {
 
 	private String rank; //string representation of the Rank
@@ -18,11 +19,10 @@ public class Card {
 	private String compareToRank; // Need a compare to as 10 was screwing up a bit
 	
 	
-	
 	/**
 	 * This creates a new card with the rank and suit given as integers.
-	 * @param rank
-	 * @param suit
+	 * @param rank The int value of the rank
+	 * @param suit The int value
 	 */
 	public Card(int rank, int suit){
 		this.faceUp=true;
@@ -159,7 +159,7 @@ public class Card {
 	}
 	
 	/**
-	 * returns a String represntation of this card's rank
+	 * returns a String representation of this card's rank
 	 * @return a String representation of the Rank
 	 */
 	public String getRank(){
@@ -208,7 +208,7 @@ public class Card {
 	
 	/**
 	 * returns this card as a String in the form rank+" of "+suit. if the card is face down then an empty string is returned.
-	 * @return 
+	 * @return String of (rank) of (suit)
 	 */
 	public String getCard(){
 		if(faceUp){
@@ -219,7 +219,10 @@ public class Card {
 		}
 	}
 
-	
+	/**
+	* returns the rank of the card
+	* @return compareToRank
+	*/
 	public String getCompareToRank(){
 		return compareToRank;
 	}
@@ -266,7 +269,7 @@ public class Card {
 	/**
 	 * Converts the Rank to a String. i.e. input is 2, and will return "2";
 	 * If you have the value of NumRank of cards (i.e input 0 means "2", use the convertNumRanktoRank method
-	 * @param numRank, value of cards from 0 to 12
+	 * @param realNumRank value of cards from 0 to 12
 	 * @return Rank
 	 */
 	public String convertRealNumRankToRank(int realNumRank){
@@ -275,7 +278,7 @@ public class Card {
 	
 	/**
 	 * Returns num Rank from rank
-	 * @param rank
+	 * @param rank The String rank of the card given
 	 * @return Returns the Num Rank from given rank, will return -1 if rank does not exist
 	 */
 	public int convertRankToNumRank(String rank){
@@ -306,7 +309,7 @@ public class Card {
 	
 	/**
 	 * Returns rank to real num rank
-	 * @param rank
+	 * @param rank The String of the rank of card given
 	 * @return Returns the Real Num Rank from given rank, will return -1 if rank does not exist
 	 */
 	public int convertRankToRealNumRank(String rank){
