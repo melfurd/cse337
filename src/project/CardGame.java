@@ -7,9 +7,9 @@ import javax.swing.JButton;
 
 
 /**
- * @author Stuart Nolton
- * @version 1.0
- * @since   2015-03-31 
+ * @author Stuart Nolton and Mel Chi
+ * @version 2.0 2015-04-16
+ * @since   1.0 2015-03-31 
  */
 public interface CardGame{
 

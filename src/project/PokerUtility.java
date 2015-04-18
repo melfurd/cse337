@@ -8,7 +8,7 @@ import java.util.Comparator;
  * determine which deck wins, as well as compare two decks
  * Can also be used to determine if a deck meets a certain case;
  * @author Stuart Nolton and Mel Chi
- * @version 2.2 - 2015-04-13
+ * @version 2.3 - 2015-04-18
  * @since   1.0 - 2015-03-31 
  */
 public class PokerUtility {

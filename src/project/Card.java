@@ -283,8 +283,6 @@ public class Card {
 	 */
 	public int convertRankToNumRank(String rank){
 		switch(rank){
-		case "0":
-		case "1":
 		case "2":
 		case "3":
 		case "4":
@@ -292,7 +290,9 @@ public class Card {
 		case "6":
 		case "7":
 		case "8":
-			int hello = Integer.parseInt("rank");
+		case "9":
+		case "10":
+			int hello = Integer.parseInt(rank)-2;
 			return hello;
 		case "Jack":
 			return 9;

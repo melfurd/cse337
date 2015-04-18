@@ -5,7 +5,11 @@ import java.util.*;
 
 import javax.swing.JButton;
 
-
+/**
+ * 
+ * @author Mel Chi and Stuart Nolton
+ *
+ */
 public class Poker2 implements CardGame{
 	
 	private Deck d;

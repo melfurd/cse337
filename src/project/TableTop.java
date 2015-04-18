@@ -16,8 +16,8 @@ import javax.swing.JTextArea;
  * for the developer to place game objects like cards,
  * buttons, scores. 
  * @author Stuart Nolton
- * @version 1.0
- * @since   2015-03-31 
+ * @version 2.0
+ * @since   2015-04-16 
  */
 public class TableTop extends JFrame implements ActionListener {
 	
