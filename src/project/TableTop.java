@@ -104,9 +104,21 @@ public class TableTop extends JFrame implements ActionListener {
 	/**
 	 * @param args
 	 */
+	
+	public TableTop(String gameName){
+		CardGame w;
+		if (gameName.equals("a")){
+			w = new War();
+		}
+		else{
+			w = new Poker2();
+		}
+		TableTop t = new TableTop(w);
+	}
+	
 	public static void main(String args[]){
-		CardGame w = new War();
-		//CardGame w = new Poker2();
+		//CardGame w = new War();
+		CardGame w = new Poker2();
 		TableTop t = new TableTop(w);
 	}
 }

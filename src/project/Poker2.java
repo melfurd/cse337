@@ -93,6 +93,7 @@ public class Poker2 implements CardGame{
 	/* (non-Javadoc)
 	 * @see CardGame#sendMessage(java.lang.String)
 	 */
+	
 	@Override
 	public void sendMessage(String message) {
 		this.message+=message;
@@ -112,6 +113,7 @@ public class Poker2 implements CardGame{
 		return this.message;
 	}
 
+	
 	@Override
 	public void checkForWin() {
 		

@@ -16,6 +16,9 @@ public class Deck extends ArrayList<Card> {
 	private int nRanks;
 	private int nSuits;
 	
+	/**
+	 * Public constructor allocates space for a deck, you can fill with any cards
+	 */
 	public Deck(){
 		
 	}
@@ -65,6 +68,7 @@ public class Deck extends ArrayList<Card> {
 	 * enough cards a message is printed.
 	 * @param nCards
 	 * @return two hands of n cards
+	 * @deprecated 
 	 */
 	public ArrayList<Deck> deal2Hands(int nCards){
 		Deck d1 = new Deck();
@@ -84,7 +88,15 @@ public class Deck extends ArrayList<Card> {
 		return twoHands;
 	}
 	
-	
+	/**
+	 * Deals nHands given the deck to deal, the number of cards per deck and hands
+	 * If there are not enough cards it will deal it evenly and the last extra deck
+	 * contains the extra cards
+	 * @param theDeck
+	 * @param nCards
+	 * @param nHands
+	 * @return
+	 */
 	public ArrayList<Deck> dealNHands(Deck theDeck, int nCards, int nHands){
 		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
 		if (theDeck.size() >= nCards*nHands){
@@ -143,9 +155,11 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	/**
-	 * 
-	 * @param deckToSplit
-	 * @param numDecks
+	 * This will split the deck one card at a time to different decks.
+	 * If extra cards remain, it will be put into the final deck on the
+	 * arrayList returned.
+	 * @param deckToSplit The deck to split
+	 * @param numDecks Number of decks
 	 * @return
 	 */
 	public ArrayList<Deck> divideDeck(Deck deckToSplit, int numDecks){

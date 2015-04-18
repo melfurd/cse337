@@ -15,7 +15,7 @@ public class Card {
 	private boolean faceUp; //boolean for face up face down true = face up, false = face down
 	private boolean onTable; //boolean for on the table and off the table true = on the table, false = off the table
 	private String owner; //String value to assign ownership to a card.
-	public String compareToRank; // Need a compare to as 10 was screwing up a bit
+	private String compareToRank; // Need a compare to as 10 was screwing up a bit
 	
 	
 	
@@ -222,6 +222,101 @@ public class Card {
 	
 	public String getCompareToRank(){
 		return compareToRank;
+	}
+	
+	/**
+	 * Converts the Rank to a String. i.e. input is 0, and will return "2";
+	 * If you have the value of RealNumRank of cards, use the convertRealNumRanktoRank method
+	 * @param numRank, value of cards from 0 to 12
+	 * @return Rank from "2" to "Ace", if the rank does not exist, it will return "N/A"
+	 */
+	public String convertNumRankToRank(int numRank){
+		switch(numRank){
+		case 0:
+			return "2";
+		case 1:
+			return "3";
+		case 2:
+			return "4";
+		case 3:
+			return "5";
+		case 4:
+			return "6";
+		case 5:
+			return "7";
+		case 6:
+			return "8";
+		case 7:
+			return "9";
+		case 8:
+			return "10";
+		case 9:
+			return "Jack";
+		case 10:
+			return "Queen";
+		case 11:
+			return "King";
+		case 12:
+			return "Ace";
+		default:
+			return "N/A";
+		}
+	}
+	
+	/**
+	 * Converts the Rank to a String. i.e. input is 2, and will return "2";
+	 * If you have the value of NumRank of cards (i.e input 0 means "2", use the convertNumRanktoRank method
+	 * @param numRank, value of cards from 0 to 12
+	 * @return Rank
+	 */
+	public String convertRealNumRankToRank(int realNumRank){
+		return convertNumRankToRank(realNumRank-2);
+	}
+	
+	/**
+	 * Returns num Rank from rank
+	 * @param rank
+	 * @return Returns the Num Rank from given rank, will return -1 if rank does not exist
+	 */
+	public int convertRankToNumRank(String rank){
+		switch(rank){
+		case "0":
+		case "1":
+		case "2":
+		case "3":
+		case "4":
+		case "5":
+		case "6":
+		case "7":
+		case "8":
+			int hello = Integer.parseInt("rank");
+			return hello;
+		case "Jack":
+			return 9;
+		case "Queen":
+			return 10;
+		case "King":
+			return 11;
+		case "Ace":
+			return 12;
+		default:
+			return -1;
+		}
+	}
+	
+	/**
+	 * Returns rank to real num rank
+	 * @param rank
+	 * @return Returns the Real Num Rank from given rank, will return -1 if rank does not exist
+	 */
+	public int convertRankToRealNumRank(String rank){
+		int temp = convertRankToNumRank(rank);
+		if (temp == -1){
+			return -1;
+		}
+		else{
+			return temp+2;
+		}
 	}
 	
 	

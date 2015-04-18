@@ -174,27 +174,29 @@ public class PokerUtility {
 		}
 		else{
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a 4 of kind with " + player1MainRank;
+				this.cardMessage = "Player wins with a 4 " + convertRealNumRankToRank(player1MainRank) + "s.";
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a 4 of a kind with " + player2MainRank;
+				this.cardMessage = "Player wins with a 4 " + convertRealNumRankToRank(player2MainRank) + "s.";
 				return false;
 			}
 			else{
 				this.player1ThirdRank = getHighCardNoMatter(player1MainRank, 1, first);
 				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
 				if (player1ThirdRank > player2ThirdRank){
-					this.cardMessage = "Player wins with a 4 of a kind with " 
-								+ player1MainRank + "with kicker value of " + player1ThirdRank;
+					this.cardMessage = "Player wins with a 4 " 
+							 + convertRealNumRankToRank(player1MainRank) + "with " + convertRealNumRankToRank(player1ThirdRank) + " kicker.";
 					return true;
 				}
 				else if (player1ThirdRank < player2ThirdRank){
-					this.cardMessage = "Player wins with a 4 of a kind with  " + player2ThirdRank;
+					this.cardMessage = "Player wins with a 4 " 
+							 + convertRealNumRankToRank(player2MainRank) + "with " + convertRealNumRankToRank(player2ThirdRank) + " kicker.";
 					return false;
 				}
 				else{
-					this.cardMessage = "Players tie with 4 of a kind" + player2MainRank;
+					this.cardMessage = "Player tie with a 4 " 
+							 + convertRealNumRankToRank(player2MainRank) + "with " + convertRealNumRankToRank(player2ThirdRank) + " kicker.";
 					tieDeck = true;
 					return true;
 				}
@@ -213,27 +215,30 @@ public class PokerUtility {
 		}
 		else{
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a full house with 3 " + player1MainRank + " and 2" + player1SecondRank;
+				this.cardMessage = "Player wins with a full house with 3 " + convertRealNumRankToRank(player1MainRank) + " and 2" + convertRealNumRankToRank(player1SecondRank);
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a full house with 3 " + player2MainRank + " and 2" + player2SecondRank;
+				this.cardMessage = "Player wins with a full house with 3 " + convertRealNumRankToRank(player2MainRank) + " and 2" + convertRealNumRankToRank(player2SecondRank);
 				return false;
 			}
 			else{
 				if (player1SecondRank > player2SecondRank){
 					this.cardMessage = "Player wins with a full house with 3 " 
-								+ player1MainRank + " and 2" + player1SecondRank;
+								+ convertRealNumRankToRank(player1MainRank)
+								+ " and 2" + convertRealNumRankToRank(player1SecondRank);
 					return true;
 				}
 				else if (player1SecondRank < player2SecondRank){
-					this.cardMessage = "Player wins with a full house with  " + player2MainRank
-					+ player2MainRank + " and 2" + player2SecondRank;
+					this.cardMessage = "Player wins with a full house with  " 
+							+ convertRealNumRankToRank(player2MainRank)
+							+ " and 2" + convertRealNumRankToRank(player2SecondRank);
 					return false;
 				}
 				else{
-					this.cardMessage = "Players tie with full house of " + player2MainRank
-							+ " and " + player2SecondRank;
+					this.cardMessage = "Players tie with full house of " 
+							+ convertRealNumRankToRank(player2MainRank)
+							+ " and " + convertRealNumRankToRank(player2SecondRank);
 					tieDeck = true;
 					return true;
 				}
@@ -266,11 +271,13 @@ public class PokerUtility {
 			}
 			else{
 				if (player1MainRank > player2MainRank){
-					this.cardMessage = "Player wins with a flush of " + temp1;
+					this.cardMessage = "Player wins with a flush of " + temp1
+							+ "with high rank of" + convertRealNumRankToRank(player1MainRank);
 					return true;
 				}
 				else if (player1MainRank < player2MainRank){
-					this.cardMessage = "Player wins with a flush of " + temp2;
+					this.cardMessage = "Player wins with a flush of " + temp2
+							+ "with high rank of" + convertRealNumRankToRank(player2MainRank);
 					return false;
 				}
 				else{
@@ -292,11 +299,13 @@ public class PokerUtility {
 		}
 		else{
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a 3 of kind with " + player1MainRank;
+				this.cardMessage = "Player wins with a 3 of kind with "
+			+ convertRealNumRankToRank(player1MainRank);
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a 3 of a kind with " + player2MainRank;
+				this.cardMessage = "Player wins with a 3 of a kind with "
+						+ convertRealNumRankToRank(player2MainRank);
 				return false;
 			}
 			else{
@@ -304,11 +313,14 @@ public class PokerUtility {
 				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
 				if (player1ThirdRank > player2ThirdRank){
 					this.cardMessage = "Player wins with a 3 of a kind with " 
-								+ player1MainRank + "with kicker value of " + "";
+								+ convertRealNumRankToRank(player1MainRank)
+								+ "with kicker value of " + convertRealNumRankToRank(player1ThirdRank);
 					return true;
 				}
 				else if (player1ThirdRank < player2ThirdRank){
-					this.cardMessage = "Player wins with a 3 of a kind with  " + player2MainRank;
+					this.cardMessage = "Player wins with a 3 of a kind with  "
+							+ convertRealNumRankToRank(player2MainRank)
+							+ "with kicker value of " + convertRealNumRankToRank(player2ThirdRank);
 					return false;
 				}
 				else{
@@ -333,33 +345,39 @@ public class PokerUtility {
 		}
 		else{
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a 2 pairs of kind with " + player1MainRank;
+				this.cardMessage = "Player wins with a 2 pairs of kind with " + convertRealNumRankToRank(player1MainRank);
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a 2 pairs of a kind with " + player2MainRank;
+				this.cardMessage = "Player wins with a 2 pairs of a kind with " + convertRealNumRankToRank(player2MainRank);
 				return false;
 			}
 			else{
 				if (player1SecondRank > player2SecondRank){
-					this.cardMessage = "Player wins with a 2 pairs of kind with " + player1MainRank + " and higher 2nd pair.";
+					this.cardMessage = "Player wins with a 2 pairs of kind with " 
+							+ convertRealNumRankToRank(player1MainRank) + " and higher 2nd pair of " 
+							+ convertRealNumRankToRank(player1SecondRank);
 					return true;
 				}
 				else if (player1SecondRank < player2SecondRank){
-					this.cardMessage = "Player wins with a 2 pairs of a kind with " + player2MainRank + " and higher 2nd pair.";
+					this.cardMessage = "Player wins with a 2 pairs of kind with "
+					+ convertRealNumRankToRank(player2MainRank) + " and higher 2nd pair of " 
+					+ convertRealNumRankToRank(player2SecondRank);
 					return false;
 				}
 				else{
 					if (player1ThirdRank > player2ThirdRank){
-						this.cardMessage = "Player wins with a 2 pairs of kind with " + player1MainRank + " and higher kicker";
+						this.cardMessage = "Player wins with a 2 pairs of kind with " 
+								+ convertRealNumRankToRank(player1MainRank) + " and higher kicker";
 						return true;
 					}
 					else if (player1ThirdRank < player2ThirdRank){
-						this.cardMessage = "Player wins with a 2 pairs of a kind with " + player2MainRank  + " and higher kicker";
+						this.cardMessage = "Player wins with a 2 pairs of a kind with " + convertRealNumRankToRank(player2MainRank)  + " and higher kicker";
 						return false;
 					}
 					else{
-						this.cardMessage = "Players with 2 players having 2 pairs plus same kicker. " + player2MainRank;
+						this.cardMessage = "Players with 2 players having 2 pairs plus same kicker. " 
+					+ convertRealNumRankToRank(player2MainRank);
 						tieDeck = true;
 						return true;
 					}
@@ -378,11 +396,13 @@ public class PokerUtility {
 		}
 		else{
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a 2 of kind with " + player1MainRank;
+				this.cardMessage = "Player wins with a 2 of kind with "
+						+ convertRealNumRankToRank(player1MainRank) + "s.";
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a 2 of a kind with " + player2MainRank;
+				this.cardMessage = "Player wins with a 2 of kind with "
+						+ convertRealNumRankToRank(player2MainRank) + "s.";
 				return false;
 			}
 			else{
@@ -394,7 +414,8 @@ public class PokerUtility {
 					return true;
 				}
 				else if (player1ThirdRank < player2ThirdRank){
-					this.cardMessage = "Player wins with a 2 of a kind with  " + player2MainRank;
+					this.cardMessage = "Player wins with a 2 of a kind with  " 
+				+ player2MainRank;
 					return false;
 				}
 				else{
