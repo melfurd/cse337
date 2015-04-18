@@ -62,6 +62,35 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	/**
+	 * Draws a card from this deck, remove this card from the deck.
+	 * @param index The index of the card in the deck you want to remove
+	 * @return drawn card
+	 */
+	public Card drawCard(int index){
+		Card drawnCard = this.remove(index);
+		this.trimToSize();
+		return drawnCard;
+		
+	}
+	
+	/**
+	 * get size of deck
+	 * @return number of cards in deck
+	 */
+	public int getSize(){
+		return nCards;
+	}
+	
+	/**
+	 * Adds a card to the deck
+	 * @param e The card object that you want to add to the deck
+	 */
+	public void addCard(Card e){
+		this.add(e);
+	}
+	
+	
+	/**
 	 * This method is to be deprecated. Please use dealNHands method.
 	 * Deals two hands of n number of cards using two decks.
 	 * Try block makes sure there are enough cards
@@ -105,8 +134,8 @@ public class Deck extends ArrayList<Card> {
 				splitDeck.add(new Deck());
 			}
 			
-			for (int i = 0; i < nCards/nHands; i++){
-				for (int j = 0; j < splitDeck.size(); j++){
+			for (int i = 0; i < nCards; i++){
+				for (int j = 0; j < nHands; j++){
 					if (theDeck.size() <= 0){
 						return splitDeck;
 					}
@@ -123,6 +152,7 @@ public class Deck extends ArrayList<Card> {
 				leftOverDeck.add(theDeck.drawCard(0));
 				leftOverDeckSize--;
 			}
+			splitDeck.add(leftOverDeck);
 			
 		}
 		else{
@@ -133,6 +163,40 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	
+	/**
+	 * Deals nHands given the deck to deal, the number of cards per deck and hands
+	 * If there are not enough cards it will deal it evenly and the last extra deck
+	 * contains the extra cards
+	 * @param nCards The number of cards to be dealt per hand
+	 * @param nHands The number of hands (deck)
+	 * @return Returns the splitteddeck
+	 */
+	public ArrayList<Deck> dealNHands(int nCards, int nHands){
+		ArrayList<Deck> splitDeck = new ArrayList<Deck>();
+		if (this.size() >= nCards*nHands){
+			for (int d = 0; d < nHands; d++){
+				splitDeck.add(new Deck());
+			}
+			
+			for (int i = 0; i < nCards; i++){
+				for (int j = 0; j < nHands; j++){
+					if (this.size() <= 0){
+						return splitDeck;
+					}
+					else{
+						splitDeck.get(j).addCard(this.drawCard(0));
+					}
+
+				}
+			}
+
+		}
+		else{
+			splitDeck = divideDeck(this, nHands);
+		}
+		
+		return splitDeck;
+	}
 	
 	/**
 	 * Splits deck into two equal parts and moves bottom half to top
@@ -156,7 +220,8 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	/**
-	 * This will split the deck one card at a time to different decks.
+	 * This will split this deck instance's deck one card at a
+	 * time to different decks.
 	 * If extra cards remain, it will be put into the final deck on the
 	 * arrayList returned.
 	 * @param deckToSplit The deck to split
@@ -182,7 +247,7 @@ public class Deck extends ArrayList<Card> {
 	}
 	
 	/**
-	 * The deck to divide
+	 * The deck to divide, leaves leftover cards in this deck, if not enough,
 	 * @param numDecks The number of decks you want to divde the deck to
 	 * @return Returns the splitted deck
 	 */
@@ -196,44 +261,16 @@ public class Deck extends ArrayList<Card> {
 		
 		for (int i = 0; i < numCardinDeck/numDecks; i++){
 			for (int j = 0; j < splitDeck.size(); j++){
+				if (this.size() > 0){
 				splitDeck.get(j).addCard(this.drawCard(0));
+				}
 			}
 		}
 		
-		splitDeck.add(this);
 		return splitDeck;
 	}
 	
 
-	
-	/**
-	 * Draws a card from this deck, remove this card from the deck.
-	 * @param index The index of the card in the deck you want to remove
-	 * @return drawn card
-	 */
-	public Card drawCard(int index){
-		Card drawnCard = this.remove(index);
-		this.trimToSize();
-		return drawnCard;
-		
-	}
-	
-	/**
-	 * get size of deck
-	 * @return number of cards in deck
-	 */
-	public int getSize(){
-		return nCards;
-	}
-	
-	/**
-	 * Adds a card to the deck
-	 * @param e The card object that you want to add to the deck
-	 */
-	public void addCard(Card e){
-		this.add(e);
-	}
-	
 	/**
 	 * Sorts the Deck, according to the rank, does not matter what the suit is.
 	 * @param theDeck Input Deck
