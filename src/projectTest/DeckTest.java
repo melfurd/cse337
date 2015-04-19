@@ -34,9 +34,40 @@ public class DeckTest {
 		assertEquals(5, returnDeck.size());
 	}
 	
+	/**
+	 * Tests the draw card
+	 */
 	@Test
 	public void testDrawCard(){
-		
+		deck.standardFill();
+		deck.drawCard(0);
+		assertEquals(51, deck.size());
+		deck.drawCard(0);
+		deck.drawCard(0);
+		deck.drawCard(0);
+		assertEquals(48, deck.size());
+	}
+	
+	/**
+	 * Tests the size of deck before and after a draw
+	 */
+	public void testGetSize(){
+		deck.standardFill();
+		assertEquals(52, deck.getSize());
+		deck.drawCard(0);
+		assertEquals(51, deck.getSize());
+	}
+	
+	/**
+	 * Tests adding cards gives the deck
+	 */
+	public void testAddCard(){
+		deck.standardFill();
+		deck.add(new Card(0,0));
+		assertEquals(53, deck.getSize());
+		deck.add(new Card(0,0));
+		deck.add(new Card(0,0));
+		assertEquals(55, deck.getSize());
 	}
 	
 	/**
@@ -79,7 +110,8 @@ public class DeckTest {
 	}
 	
 	/**
-	 * 
+	 * Tests dividing the decks by different methods
+	 * Makes sure if not enough cards, the cards are added divided correctly
 	 */
 	@Test
 	public void testDivideDeck(){
@@ -127,6 +159,72 @@ public class DeckTest {
 
 	
 	}
+	
+	/**
+	 * Tests if the rank of the cards go from 2 up to aces
+	 */
+	@Test
+	public void testSortDeckByNumRank(){
+		deck.standardFill();
+		deck = deck.sortDeckByNumRank(deck);
+		assertEquals(2, deck.get(0).getRealNumRank());
+		assertEquals(2, deck.get(1).getRealNumRank());
+		assertEquals(2, deck.get(2).getRealNumRank());
+		assertEquals(2, deck.get(3).getRealNumRank());
+		assertEquals(3, deck.get(4).getRealNumRank());
+		assertEquals(3, deck.get(5).getRealNumRank());
+		assertEquals(3, deck.get(6).getRealNumRank());
+		assertEquals(3, deck.get(7).getRealNumRank());
+		assertEquals(14, deck.get(48).getRealNumRank());
+		assertEquals(14, deck.get(49).getRealNumRank());
+		assertEquals(14, deck.get(50).getRealNumRank());
+		assertEquals(14, deck.get(51).getRealNumRank());
+	}
+	
+	/**
+	 * Tests if the deck is sorted by suit, rank does not matter
+	 */
+	@Test
+	public void testSortDeckBySuit(){
+		deck.standardFill();
+		deck = deck.sortDeckBySuit(deck, "Hearts", "Diamonds", "Spades", "Clubs");
+		assertEquals("Hearts", deck.get(0).getSuit());
+		assertEquals("Diamonds", deck.get(15).getSuit());
+		assertEquals("Spades", deck.get(30).getSuit());
+		assertEquals("Clubs", deck.get(50).getSuit());
+
+	}
+	
+	/**
+	 * sorts by suit rank first, then sorts the ranks by suit
+	 */
+	@Test
+	public void testSortDeckByRankingOfEachSuit(){
+		Deck theDeck = new Deck();
+		theDeck.standardFill();
+		theDeck = deck.sortDeckByRankingOfEachSuit(theDeck, "Hearts", "Diamonds", "Spades", "Clubs");
+		this.deck = theDeck;
+		assertEquals(2, deck.get(0).getRealNumRank());
+		assertEquals("Hearts", deck.get(0).getSuit());
+		assertEquals(3, deck.get(1).getRealNumRank());
+		assertEquals("Hearts", deck.get(1).getSuit());
+		assertEquals(4, deck.get(2).getRealNumRank());
+		assertEquals("Hearts", deck.get(2).getSuit());
+		assertEquals(5, deck.get(3).getRealNumRank());
+		assertEquals("Hearts", deck.get(3).getSuit());
+		
+		assertEquals(11, deck.get(48).getRealNumRank());
+		assertEquals("Clubs", deck.get(48).getSuit());
+		assertEquals(12, deck.get(49).getRealNumRank());
+		assertEquals("Clubs", deck.get(49).getSuit());
+		assertEquals(13, deck.get(50).getRealNumRank());
+		assertEquals("Clubs", deck.get(50).getSuit());
+		assertEquals(14, deck.get(51).getRealNumRank());
+		assertEquals("Clubs", deck.get(51).getSuit());
+	}
+	
+
+
 
 
 }

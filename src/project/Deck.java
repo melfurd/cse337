@@ -330,7 +330,9 @@ public class Deck extends ArrayList<Card> {
 	
 	/**
 	 * Method sorts the deck by suit and will be placed in order depending on the order you would like it by
-	 * the different param inputs.
+	 * the different param inputs. It first sorts by rank, then sorts
+	 * by suit. It will go as 2,3,4,5,6 of each suit
+	 * Use 
 	 * @param theDeck The deck that you want to sort
 	 * @param cardType1 Input: "Hearts", "Diamonds", "Spades", "Clubs"
 	 * @param cardType2 Input: "Hearts", "Diamonds", "Spades", "Clubs"
@@ -343,10 +345,9 @@ public class Deck extends ArrayList<Card> {
 	 *	Warning: if you do not input the correct type of card, it will not add whatever
 	 * type you are missing or the incorrect type of card
 	 */
-		public Deck sortDeckBySuitAndRank(Deck theDeck, String cardType1,
+		public Deck sortDeckByRankingOfEachSuit(Deck theDeck, String cardType1,
 				String cardType2, String cardType3, String cardType4){
 				Deck theNewDeck = sortDeckByNumRank(theDeck);
 				return sortDeckBySuit(theNewDeck, cardType1, cardType2, cardType3, cardType4);
 		}
-
 }
