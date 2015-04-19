@@ -305,6 +305,36 @@ public class PokerUtility {
 		}
 		
 		
+		//Check Straight
+		this.firstPlayer = checkStraight(first);
+		this.player1MainRank = highRank1;
+		this.secondPlayer = checkStraight(second);
+		this.player2MainRank = highRank1;
+		
+		if (firstPlayer && secondPlayer){
+			if (player1MainRank > player2MainRank){
+				this.cardMessage = "Player wins with a straight high card of " + convertRealNumRankToRank(player1MainRank);
+				return true;
+			}
+			else if (player1MainRank < player2MainRank){
+				this.cardMessage = "Player wins with a straight high card of " + convertRealNumRankToRank(player2MainRank);
+				return false;
+			}
+			else{
+				this.cardMessage = "Player wins with a straight high card of " + convertRealNumRankToRank(player1MainRank);
+				this.tieDeck = true;
+				return true;
+			}
+		}
+		else if (firstPlayer){
+			this.cardMessage = "Player wins with a straight high card of " + convertRealNumRankToRank(player1MainRank);
+			return true;
+		}
+		else if (secondPlayer){
+			this.cardMessage = "Player wins with a straight high card of " + convertRealNumRankToRank(player2MainRank);
+			return false;
+		}
+		
 		//check 3 of a kind
 		
 		this.player1MainRank = checkNumOfAKind(first, 3, 0);
@@ -841,7 +871,8 @@ public class PokerUtility {
 			}
 		}
 		
-
+		straightCounter = 0;
+		
 		for (int i = 1; i < theDeck.size() ; i++){
 			if (theDeck.get(i-1).getNumericalRank() == theDeck.get(i).getNumericalRank()){
 				

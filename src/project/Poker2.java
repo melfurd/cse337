@@ -183,7 +183,7 @@ public class Poker2 implements CardGame{
 		else{
 			message = "PLAYER 2:" + pu.cardMessage;
 		}
-		sendMessage(message + "\n");
+
 		
 	}
 	
