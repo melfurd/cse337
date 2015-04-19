@@ -39,7 +39,7 @@ public class PokerUtility {
 	private boolean firstPlayer = false;
 	private boolean secondPlayer = false;
 	
-	/**
+	/**`
 	 * Accessable Boolean to determine if there was a tie
 	 */
 	public boolean tieDeck = false;
