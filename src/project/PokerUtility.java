@@ -148,27 +148,49 @@ public class PokerUtility {
 		this.secondPlayer = checkStraightFlush(second);
 		this.player2MainRank = this.highRank1;
 		
+		
 		// IF BOTH HAVE A STRAIGHT FLUSH NEED TO COMPARE RANK
 		if (firstPlayer && secondPlayer){
 			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				if (player1MainRank == 14){
+					this.cardMessage = "Player wins with a " + checkFlush(first) + " royal flush!";
+				}
+				else{
+					this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				}
 				return true;
 			}
 			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+				if (player2MainRank == 14){
+					this.cardMessage = "Player wins with a " + checkFlush(second) + " royal flush!";
+				}
+				else{
+					this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
+				}
 				return false;
 			}
 			else{
+				this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
 				this.tieDeck = true;
 				return true;
 			}
 		}
 		else if (firstPlayer){ //ONLY FIRST PLAYER HAS
-			this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+			if (player1MainRank == 14){
+				this.cardMessage = "Player wins with a " + checkFlush(first) + " royal flush!";
+			}
+			else{
+				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
+			}
 			return true;
 		}
 		else if (secondPlayer){ //ONLY SECOND PLAYER HAS
-			this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
+			if (player2MainRank == 14){
+				this.cardMessage = "Player wins with a " + checkFlush(second) + " royal flush!";
+			}
+			else{
+				this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
+			}
 			return false;
 		}
 		
@@ -941,50 +963,6 @@ public class PokerUtility {
 		}
 		return valueToReturn;
 	}
-	
-	/**
-	 * Compares two decks for straight flush
-	 * @param first Deck1
-	 * @param second Deck2
-	 * @return true if first card is higher
-	 */
-	public boolean compareTwoDecksForStraightFlush(Deck first, Deck second){
-		this.firstPlayer = checkStraightFlush(first);
-		this.player1MainRank = this.highRank1;
-		
-		this.secondPlayer = checkStraightFlush(second);
-		this.player2MainRank = this.highRank1;
-		
-		// IF BOTH HAVE A STRAIGHT FLUSH NEED TO COMPARE RANK
-		if (firstPlayer && secondPlayer){
-			if (player1MainRank > player2MainRank){
-				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
-				return true;
-			}
-			else if (player1MainRank < player2MainRank){
-				this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
-				return false;
-			}
-			else{
-				this.tieDeck = true;
-				return true;
-			}
-		}
-		else if (firstPlayer){ //ONLY FIRST PLAYER HAS
-			this.cardMessage = "Player wins with a straight flush with high card of " + player1MainRank;
-			return true;
-		}
-		else if (secondPlayer){ //ONLY SECOND PLAYER HAS
-			this.cardMessage = "Player wins with a straight flush with high card of " + player2MainRank;
-			return false;
-		}
-		else{
-			this.cardMessage = "No Player has straight flush";
-			return false;
-		}
-		
-	}
-	
 	
 	/**
 	 * Converts the Rank to a String. i.e. input is 0, and will return "2";

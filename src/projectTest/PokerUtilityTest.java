@@ -246,7 +246,6 @@ public class PokerUtilityTest {
 		deck.add(new Card(8,1));
 		deck.add(new Card(7,0));
 		deck.add(new Card(6,0));
-		assertTrue(poke.checkStraight(deck));
 		
 		Deck deck2 = new Deck();
 		deck2.add(new Card(10,2));
@@ -256,8 +255,77 @@ public class PokerUtilityTest {
 		deck2.add(new Card(3,1));
 		deck2.add(new Card(7,0));
 		deck2.add(new Card(6,0));
-		assertFalse(poke.checkStraight(deck2));
 		assertTrue(poke.compareDecks(deck, deck2));
+		System.out.println(poke.cardMessage);
+		
+		deck = new Deck();
+		deck.add(new Card(12,2));
+		deck.add(new Card(12,1));
+		deck.add(new Card(12,0));
+		deck.add(new Card(12,3));
+		deck.add(new Card(8,1));
+		deck.add(new Card(7,0));
+		deck.add(new Card(6,0));
+		
+		deck2 = new Deck();
+		deck2.add(new Card(12,1));
+		deck2.add(new Card(11,1));
+		deck2.add(new Card(10,1));
+		deck2.add(new Card(9,1));
+		deck2.add(new Card(8,1));
+		deck2.add(new Card(7,0));
+		deck2.add(new Card(6,0));
+
+		assertFalse(poke.compareDecks(deck, deck2));
+		System.out.println(poke.cardMessage);
+	
+		deck = new Deck();
+		deck.add(new Card(11,2));
+		deck.add(new Card(2,1));
+		deck.add(new Card(0,0));
+		deck.add(new Card(0,3));
+		deck.add(new Card(8,1));
+		deck.add(new Card(7,0));
+		deck.add(new Card(6,0));
+		
+		deck2 = new Deck();
+		deck2.add(new Card(12,1));
+		deck2.add(new Card(11,2));
+		deck2.add(new Card(10,3));
+		deck2.add(new Card(9,1));
+		deck2.add(new Card(8,1));
+		deck2.add(new Card(7,0));
+		deck2.add(new Card(6,0));
+
+		assertFalse(poke.compareDecks(deck, deck2));
+		System.out.println(poke.cardMessage);
+	
+	
+		deck = new Deck();
+		deck.add(new Card(11,2));
+		deck.add(new Card(2,1));
+		deck.add(new Card(0,0));
+		deck.add(new Card(0,3));
+		deck.add(new Card(8,1));
+		deck.add(new Card(8,3));
+		deck.add(new Card(6,0));
+		
+		deck2 = new Deck();
+		deck2.add(new Card(9,1));
+		deck2.add(new Card(7,2));
+		deck2.add(new Card(10,3));
+		deck2.add(new Card(8,0));
+		deck2.add(new Card(8,1));
+		deck2.add(new Card(0,2));
+		deck2.add(new Card(0,1));
+
+		assertTrue(poke.compareDecks(deck, deck2));
+		System.out.println(poke.cardMessage);
+	
+	
+	
+	
+	
 	}
 
 }
