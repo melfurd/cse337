@@ -49,12 +49,17 @@ public class PokerUtility {
 	public String cardMessage = "";
 	Deck first;
 	Deck second;
+	Deck temporary;
+	
+	Deck firstTempDeck = new Deck();
+	Deck secondTempDeck = new Deck();
+	Deck tempDeck = new Deck();
 	
 	/**
 	 * Default constructor, that way you can use this class for methods
 	 */
 	public PokerUtility(){
-		
+		resetUtility();
 	}
 	
 	/**
@@ -81,6 +86,9 @@ public class PokerUtility {
 		this.firstPlayer = false;
 		this.secondPlayer = false;
 		this.tieDeck = false;
+		this.firstTempDeck = new Deck();
+		this.secondTempDeck = new Deck();
+		this.tempDeck = new Deck();
 		resetCardRank();
 	}
 	
@@ -118,6 +126,7 @@ public class PokerUtility {
 		return theDeck;
 	}
 	
+
 	/**
 	 * Compares two decks starting from straightflush, 4 of a kind, fullhouse
 	 * flush, three of a kind, two pairs, two of a kind, high card
@@ -256,8 +265,11 @@ public class PokerUtility {
 		}
 		else{
 			temp1 = checkFlush(first);
+			this.firstTempDeck = tempDeck;
 			player1MainRank = highRank2;
+			
 			temp2 = checkFlush(second);
+			this.secondTempDeck = tempDeck;
 			player2MainRank = highRank2;
 			
 			if (!temp1.equals("None") && temp2.equals("None")){
@@ -270,21 +282,25 @@ public class PokerUtility {
 				
 			}
 			else{
-				if (player1MainRank > player2MainRank){
-					this.cardMessage = "Player wins with a flush of " + temp1
-							+ "with high rank of" + convertRealNumRankToRank(player1MainRank);
-					return true;
+				for (int i =0; i < 5; i++ ){
+					if(firstTempDeck.get(i).getRealNumRank() > secondTempDeck.get(i).getRealNumRank()){
+						this.cardMessage = "Player wins with a flush of " + temp1
+								+ "with higher non similar card of" + firstTempDeck.get(i).getRealNumRank();
+						return true;
+					}
+					else if (firstTempDeck.get(i).getRealNumRank() < secondTempDeck.get(i).getRealNumRank()){
+						this.cardMessage = "Player wins with a flush of " + temp1
+								+ "with higher non similar card of" + secondTempDeck.get(i).getRealNumRank();
+						return false;
+					}
+
 				}
-				else if (player1MainRank < player2MainRank){
-					this.cardMessage = "Player wins with a flush of " + temp2
-							+ "with high rank of" + convertRealNumRankToRank(player2MainRank);
-					return false;
-				}
-				else{
-					this.cardMessage = "Players tie with flush of " + temp1;
-					tieDeck = true;
-					return true;
-				}
+				
+				//All the same then its a tie
+				this.cardMessage = "Players tie with flush of " + temp1;
+				tieDeck = true;
+				return true;
+				
 			}
 		}
 		
@@ -309,25 +325,41 @@ public class PokerUtility {
 				return false;
 			}
 			else{
-				this.player1ThirdRank = getHighCardNoMatter(player1MainRank, 1, first);
-				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
-				if (player1ThirdRank > player2ThirdRank){
-					this.cardMessage = "Player wins with a 3 of a kind with " 
+				this.firstTempDeck = new Deck();
+				this.secondTempDeck = new Deck();
+				
+				for (int i = first.size()-1; i >=0 ; i--){
+					if (first.get(i).getNumRank() != player1MainRank){
+						firstTempDeck.add(first.get(i));
+					}
+				}
+				for (int i = second.size()-1; i>=0 ; i--){
+					if (second.get(i).getNumRank() != player2MainRank){
+						secondTempDeck.add(first.get(i));
+					}
+				}
+				
+				for (int i =0; i < 2; i++ ){
+					if(firstTempDeck.get(i).getRealNumRank() > secondTempDeck.get(i).getRealNumRank()){
+						this.cardMessage = "Player wins with a 3 of a kind with " 
 								+ convertRealNumRankToRank(player1MainRank)
-								+ "with kicker value of " + convertRealNumRankToRank(player1ThirdRank);
-					return true;
+								+ "with non same kicker value of " + firstTempDeck.get(i).getRealNumRank();
+						return true;
+					}
+					else if (firstTempDeck.get(i).getRealNumRank() < secondTempDeck.get(i).getRealNumRank()){
+						this.cardMessage = "Player wins with a 3 of a kind with " 
+								+ convertRealNumRankToRank(player2MainRank)
+								+ "with non same kicker value of " + secondTempDeck.get(i).getRealNumRank();
+						return false;
+					}
+
 				}
-				else if (player1ThirdRank < player2ThirdRank){
-					this.cardMessage = "Player wins with a 3 of a kind with  "
-							+ convertRealNumRankToRank(player2MainRank)
-							+ "with kicker value of " + convertRealNumRankToRank(player2ThirdRank);
-					return false;
-				}
-				else{
-					this.cardMessage = "Players tie 3 of a kind" + player2MainRank;
-					tieDeck = true;
-					return true;
-				}
+				
+				//All the same then its a tie
+				this.cardMessage = "Players tie 3 of a kind" + player2MainRank;
+				tieDeck = true;
+				return true;
+
 			}
 		}
 		
@@ -410,23 +442,43 @@ public class PokerUtility {
 				return false;
 			}
 			else{
-				this.player1ThirdRank = getHighCardNoMatter(player1MainRank, 1, first);
-				this.player2ThirdRank = getHighCardNoMatter(player2MainRank, 1, second);
-				if (player1ThirdRank > player2ThirdRank){
-					this.cardMessage = "Player wins with a 2 of a kind with " 
-								+ player1MainRank + "with kicker value of " + "";
-					return true;
+
+				this.firstTempDeck = new Deck();
+				this.secondTempDeck = new Deck();
+				
+				for (int i = first.size()-1; i >=0 ; i--){
+					if (first.get(i).getNumRank() != player1MainRank){
+						firstTempDeck.add(first.get(i));
+					}
 				}
-				else if (player1ThirdRank < player2ThirdRank){
-					this.cardMessage = "Player wins with a 2 of a kind with  " 
-				+ player2MainRank;
-					return false;
+				for (int i = second.size()-1; i>=0 ; i--){
+					if (second.get(i).getNumRank() != player2MainRank){
+						secondTempDeck.add(first.get(i));
+					}
 				}
-				else{
-					this.cardMessage = "Players tie 2 of a kind" + player2MainRank;
-					tieDeck = true;
-					return true;
+				
+				for (int i =0; i < 3; i++ ){
+					if(firstTempDeck.get(i).getRealNumRank() > secondTempDeck.get(i).getRealNumRank()){
+						this.cardMessage = "Player wins with a 2 of a kind with " 
+								+ convertRealNumRankToRank(player1MainRank)
+								+ "with non same kicker value of " + firstTempDeck.get(i).getRealNumRank();
+						return true;
+					}
+					else if (firstTempDeck.get(i).getRealNumRank() < secondTempDeck.get(i).getRealNumRank()){
+						this.cardMessage = "Player wins with a 2 of a kind with " 
+								+ convertRealNumRankToRank(player2MainRank)
+								+ "with non same kicker value of " + secondTempDeck.get(i).getRealNumRank();
+						return false;
+					}
+
 				}
+				
+				//All the same then its a tie
+				this.cardMessage = "Players tie 2 of a kind" + player2MainRank;
+				tieDeck = true;
+				return true;
+				
+
 			}
 		}
 		
@@ -494,6 +546,7 @@ public class PokerUtility {
 		boolean checkIfStraight = checkStraight(checker);
 		
 		if (checkIfStraight){
+			tempDeck = checker;
 			return true;
 		}
 		
@@ -688,12 +741,13 @@ public class PokerUtility {
 		}
 		
 		int exitCounter = 0;
-		
+		tempDeck = new Deck();
 		if (spadesCounter >= 5){
 			for (int i = theDeck.size()-1; i >=0 ; i--){
 				String tempSuit = theDeck.get(i).getSuit();
 				if (tempSuit.equals("Spades")){
 					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					tempDeck.add(theDeck.get(i));
 					exitCounter++;
 					if (exitCounter >= 5){
 						break;
@@ -707,6 +761,7 @@ public class PokerUtility {
 				String tempSuit = theDeck.get(i).getSuit();
 				if (tempSuit.equals("Diamonds")){
 					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					tempDeck.add(theDeck.get(i));
 					exitCounter++;
 					if (exitCounter >= 5){
 						break;
@@ -720,6 +775,7 @@ public class PokerUtility {
 				String tempSuit = theDeck.get(i).getSuit();
 				if (tempSuit.equals("Hearts")){
 					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					tempDeck.add(theDeck.get(i));
 					exitCounter++;
 					if (exitCounter >= 5){
 						break;
@@ -733,6 +789,7 @@ public class PokerUtility {
 				String tempSuit = theDeck.get(i).getSuit();
 				if (tempSuit.equals("Clubs")){
 					this.highRank2 = highRank2 + theDeck.get(i).getRealNumRank();
+					tempDeck.add(theDeck.get(i));
 					exitCounter++;
 					if (exitCounter >= 5){
 						break;
@@ -755,9 +812,35 @@ public class PokerUtility {
 	 */
 	public boolean checkStraight(Deck theDeck){
 		//resetUtility();
+		theDeck = sortDeck(theDeck);
 		boolean hasStraight = false;
 		int straightCounter = 0;
 		//theDeck = sortDeck(theDeck);
+
+		//A-5 check
+		
+		if (theDeck.get(theDeck.size()-1).getNumericalRank() == 14 && theDeck.get(0).getNumericalRank() == 2){
+			for (int i = 1; i < theDeck.size() ; i++){
+				if (theDeck.get(i-1).getNumericalRank() == theDeck.get(i).getNumericalRank()){
+					
+				}
+				else if (theDeck.get(i-1).getNumericalRank()+1 == theDeck.get(i).getNumericalRank()){
+					straightCounter++;
+					if (straightCounter >= 3){
+						this.highRank1 = theDeck.get(i).getNumericalRank();
+						hasStraight = true;
+					}
+				}
+				else{
+					straightCounter = 0;
+				}
+			}
+			
+			if (hasStraight){
+				return true;
+			}
+		}
+		
 
 		for (int i = 1; i < theDeck.size() ; i++){
 			if (theDeck.get(i-1).getNumericalRank() == theDeck.get(i).getNumericalRank()){
@@ -928,8 +1011,6 @@ public class PokerUtility {
 	 */
 	public int convertRankToNumRank(String rank){
 		switch(rank){
-		case "0":
-		case "1":
 		case "2":
 		case "3":
 		case "4":
@@ -937,7 +1018,9 @@ public class PokerUtility {
 		case "6":
 		case "7":
 		case "8":
-			int hello = Integer.parseInt("rank");
+		case "9":
+		case "10":
+			int hello = Integer.parseInt(rank)-2;
 			return hello;
 		case "Jack":
 			return 9;
