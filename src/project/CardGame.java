@@ -15,7 +15,7 @@ public interface CardGame{
 
 	/**
 	 * An ArrayList of type Card meant to hold any and all cards on the playing table. the cards in this ArrayList are displayed in the top panel of the TableTop JFrame.
-	 * @deprecated The return type for this method will most likely be changed to type Deck
+	 The return type for this method will most likely be changed to type Deck
 	 */
 	ArrayList<Card> cardsOnTable = new ArrayList<Card>();
 	

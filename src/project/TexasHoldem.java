@@ -1,5 +1,4 @@
 package project;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
@@ -20,6 +19,7 @@ public class TexasHoldem implements CardGame{
 	private ArrayList<Deck> hands = new ArrayList<Deck>();
 	private PokerUtility poke = new PokerUtility();
 	
+	private boolean herro;
 
 	private JButton deal;
 	private JButton winner;
