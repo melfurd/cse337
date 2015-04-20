@@ -207,6 +207,16 @@ public class PokerUtilityTest {
 		deck.add(new Card(6,0));
 		assertFalse(poke.checkStraight(deck));
 		
+		deck = new Deck();
+		deck.add(new Card(12,2));
+		deck.add(new Card(11,1));
+		deck.add(new Card(10,0));
+		deck.add(new Card(2,1));
+		deck.add(new Card(9,1));
+		deck.add(new Card(4,0));
+		deck.add(new Card(6,0));
+		assertFalse(poke.checkStraight(deck));
+		
 	}
 	
 	@Test

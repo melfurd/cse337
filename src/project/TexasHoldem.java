@@ -18,9 +18,6 @@ public class TexasHoldem implements CardGame{
 	private ArrayList<JButton> foldHand = new ArrayList<JButton>();
 	private ArrayList<Deck> hands = new ArrayList<Deck>();
 	private PokerUtility poke = new PokerUtility();
-	
-	private boolean herro;
-
 	private JButton deal;
 	private JButton winner;
 	
