@@ -4,7 +4,7 @@ package project;
  * including 4 suites and 13 ranks for a total of 52 standard cards.
 /**
  * @author Stuart Nolton and Mel Chi
- * @version 2.0 2015-04-13
+ * @version 2.0 2015-04-18
  * @since   version 1.0 2015-03-31 
  */
 

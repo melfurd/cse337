@@ -7,7 +7,7 @@ import java.util.Comparator;
 
 /**
  * @author Stuart Nolton and Mel Chi
- * @version 2.0 2015-04-13
+ * @version 2.0 2015-04-14
  * @since   version 1.0 2015-03-31 
  */
 public class Deck extends ArrayList<Card> {
