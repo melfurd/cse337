@@ -81,35 +81,75 @@ public class TexasHoldem3 implements CardGame{
 			checkAndBet.add(new JButton("Player 3 Check"));
 			foldHand.add(new JButton("Player 3 Fold"));
 		}
+		else{
+			Player3Out = true;
+		}
 		
 		if (numberOfPlayers >= 4){
 			checkAndBet.add(new JButton("Player 4 Check"));
 			foldHand.add(new JButton("Player 4 Fold"));
 		}
+		else{
+			Player4Out = true;
+		}
+		
 		
 		if (numberOfPlayers >= 5){
 			checkAndBet.add(new JButton("Player 5 Check"));
 			foldHand.add(new JButton("Player 5 Fold"));
 		}
+		else{
+			Player5Out = true;
+		}
+		
 		
 		if (numberOfPlayers >= 6){
 			checkAndBet.add(new JButton("Player 6 Check"));
 			foldHand.add(new JButton("Player 6 Fold"));
 		}
+		else{
+			Player6Out = true;
+		}
+		
 		
 		if (numberOfPlayers >= 7){
 			checkAndBet.add(new JButton("Player 7 Check"));
 			foldHand.add(new JButton("Player 7 Fold"));
+		}		
+		else{
+			Player7Out = true;
 		}
+		
 		
 		if (numberOfPlayers >= 8){
 			checkAndBet.add(new JButton("Player 8 Check"));
 			foldHand.add(new JButton("Player 8 Fold"));
 		}
+		else{
+			Player8Out = true;
+		}
+		
 		
 		
 	}
 	
+	private boolean Player1Fold = false;
+	private boolean Player2Fold = false;
+	private boolean Player3Fold = false;
+	private boolean Player4Fold = false;
+	private boolean Player5Fold = false;
+	private boolean Player6Fold = false;
+	private boolean Player7Fold = false;
+	private boolean Player8Fold = false;
+	
+	private boolean Player1Out = false;
+	private boolean Player2Out = false;
+	private boolean Player3Out = false;
+	private boolean Player4Out = false;
+	private boolean Player5Out = false;
+	private boolean Player6Out = false;
+	private boolean Player7Out = false;
+	private boolean Player8Out = false;
 	
 	StringBuilder stringBuilder = new StringBuilder();
 	@Override
