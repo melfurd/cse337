@@ -6,10 +6,10 @@ import javax.swing.JButton;
 
 /**
  * 
- * @author Mel Chi and Stuart Nolton
+ * @author Mel Chi
  *
  */
-public class TexasHoldem2 implements CardGame{
+public class TexasHoldem3 implements CardGame{
 	
 	private Deck tableDeck;
 	private Deck tableShownDeck;
@@ -32,8 +32,10 @@ public class TexasHoldem2 implements CardGame{
 	public boolean river = false;
 	public boolean whoWinner = false;
 	
+	private int dealer;
+	
 	private int numberOfPlayer = 0;
-	public TexasHoldem2(int numberOfPlayers){
+	public TexasHoldem3(int numberOfPlayers){
 		tableDeck = new Deck();
 		if (numberOfPlayers > 8){
 			numberOfPlayers = 8;
@@ -41,8 +43,10 @@ public class TexasHoldem2 implements CardGame{
 		if (numberOfPlayers < 2){
 			numberOfPlayers = 2;
 		}
+		this.dealer = 0;
 		
 		numberOfPlayer = numberOfPlayers;
+		addButtons(numberOfPlayers);
 		
 		tableDeck.standardFill();
 		
@@ -56,6 +60,55 @@ public class TexasHoldem2 implements CardGame{
 		
 	}
 	
+	private void changeDealer(){
+		if (this.dealer >= this.numberOfPlayer){
+			this.dealer = 1;
+		}
+		else{
+			this.dealer++;
+		}
+	}
+	
+	private void addButtons(int numberOfPlayers){
+		if (numberOfPlayers >= 2){
+			checkAndBet.add(new JButton("Player 1 Check"));
+			foldHand.add(new JButton("Player 1 Fold"));
+			checkAndBet.add(new JButton("Player 2 Check"));
+			foldHand.add(new JButton("Player 2 Fold"));
+		}
+		
+		if (numberOfPlayers >= 3){
+			checkAndBet.add(new JButton("Player 3 Check"));
+			foldHand.add(new JButton("Player 3 Fold"));
+		}
+		
+		if (numberOfPlayers >= 4){
+			checkAndBet.add(new JButton("Player 4 Check"));
+			foldHand.add(new JButton("Player 4 Fold"));
+		}
+		
+		if (numberOfPlayers >= 5){
+			checkAndBet.add(new JButton("Player 5 Check"));
+			foldHand.add(new JButton("Player 5 Fold"));
+		}
+		
+		if (numberOfPlayers >= 6){
+			checkAndBet.add(new JButton("Player 6 Check"));
+			foldHand.add(new JButton("Player 6 Fold"));
+		}
+		
+		if (numberOfPlayers >= 7){
+			checkAndBet.add(new JButton("Player 7 Check"));
+			foldHand.add(new JButton("Player 7 Fold"));
+		}
+		
+		if (numberOfPlayers >= 8){
+			checkAndBet.add(new JButton("Player 8 Check"));
+			foldHand.add(new JButton("Player 8 Fold"));
+		}
+		
+		
+	}
 	
 	
 	StringBuilder stringBuilder = new StringBuilder();
@@ -65,6 +118,7 @@ public class TexasHoldem2 implements CardGame{
 			tableDeck = new Deck();
 			tableShownDeck = new Deck();
 			cardsOnTable = new ArrayList<Card>();
+			changeDealer();
 			
 			
 			tableDeck.standardFill();
@@ -74,13 +128,14 @@ public class TexasHoldem2 implements CardGame{
 				hands.add(new Deck());
 			}
 			
-			for(int i = 0; i < 2; i++){
-				for (int j = 0; j < hands.size(); j++){
-					hands.get(j).add(tableDeck.drawCard(0));
-				}
-			}
+			dealCycle();
+			
+//			for(int i = 0; i < 2; i++){
+//				for (int j = 0; j < hands.size(); j++){
+//					hands.get(j).add(tableDeck.drawCard(0));
+//				}
+//			}
 			dealHands = false;
-			flop = true;
 		}
 		else if (e.getSource()== deal && flop){
 			tableShownDeck.add(tableDeck.drawCard(0));
@@ -117,7 +172,28 @@ public class TexasHoldem2 implements CardGame{
 			
 		}
 		
+		else if (e.getSource()== checkAndBet.get(0)){
+			
+		}
+		
+		else if (e.getSource()== foldHand.get(0)){
+			
+		}
+		
 
+	}
+	
+	private void dealCycle(){
+		for(int i = 0; i < 2; i++){
+			for (int j = 0; j < hands.size(); j++){
+				if (j+dealer <= hands.size()){
+					hands.get(j+dealer-1).add(tableDeck.drawCard(0));
+				}
+				else{
+					hands.get(j+dealer-hands.size()-1).add(tableDeck.drawCard(0));
+				}
+			}
+		}
 	}
 	
 
@@ -132,6 +208,11 @@ public class TexasHoldem2 implements CardGame{
 		ArrayList<JButton> actions = new ArrayList<JButton>();
 		actions.add(deal);
 		actions.add(winner);
+		
+		for (int i = 0; i < checkAndBet.size(); i++){
+			actions.add(checkAndBet.get(i));
+			actions.add(foldHand.get(i));
+		}
 		return actions;
 	}
 	
